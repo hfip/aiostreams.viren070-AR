@@ -1,0 +1,1716 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>توثيق AIOStreams الرسمي بالعربية — docs.aiostreams.viren070.me</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Cairo', 'Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            fd: {
+              bg: '#09090b',
+              card: '#111115',
+              border: '#232329',
+              muted: '#a1a1aa',
+              accent: '#7c3aed',
+              accentLight: '#a78bfa'
+            }
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    body {
+      font-family: 'Cairo', 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+    code, pre {
+      font-family: 'JetBrains Mono', monospace;
+      direction: ltr;
+      text-align: left;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: rgba(161, 161, 170, 0.25);
+      border-radius: 9999px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: rgba(161, 161, 170, 0.45);
+    }
+    .hero-glow {
+      background: radial-gradient(circle at 50% 0%, rgba(124, 58, 237, 0.22), rgba(59, 130, 246, 0.08) 45%, transparent 75%);
+    }
+    .step-badge {
+      box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.15);
+    }
+  </style>
+</head>
+<body class="bg-zinc-50 text-zinc-900 dark:bg-[#09090b] dark:text-zinc-100 min-h-screen flex flex-col selection:bg-violet-500 selection:text-white transition-colors duration-200">
+
+  <!-- Toast Container -->
+  <div id="toastContainer" class="fixed bottom-5 left-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- Top Fumadocs-Style Header -->
+  <header class="sticky top-0 z-40 h-14 bg-white/85 dark:bg-[#09090b]/85 backdrop-blur-md border-b border-zinc-200 dark:border-zinc-800/90">
+    <div class="max-w-[1440px] mx-auto px-4 sm:px-6 h-full flex items-center justify-between gap-3">
+      
+      <!-- Right: Mobile Drawer Button + AIOStreams Logo & Top Nav -->
+      <div class="flex items-center gap-4">
+        <button id="mobileMenuBtn" type="button" class="lg:hidden p-2 rounded-lg text-zinc-600 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800" aria-label="القائمة">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+
+        <button id="brandLogoBtn" type="button" class="flex items-center gap-2.5 text-right group">
+          <img src="https://raw.githubusercontent.com/Viren070/AIOStreams/main/packages/frontend/public/assets/logo.png" alt="AIOStreams Logo" class="w-7 h-7 rounded-lg object-contain" onerror="this.style.display='none'; document.getElementById('fallbackLogoSvg').classList.remove('hidden');" />
+          <div id="fallbackLogoSvg" class="hidden w-7 h-7 rounded-lg bg-gradient-to-br from-violet-600 to-indigo-600 flex items-center justify-center text-white font-black text-xs">AIO</div>
+          <span class="font-extrabold text-base tracking-tight text-zinc-900 dark:text-white">AIOStreams</span>
+          <span class="text-[11px] font-mono px-2 py-0.5 rounded-md bg-violet-500/15 text-violet-600 dark:text-violet-300 border border-violet-500/30">v2.37 AR</span>
+        </button>
+
+        <!-- Fumadocs Top Links -->
+        <nav class="hidden xl:flex items-center gap-1 text-xs font-bold text-zinc-600 dark:text-zinc-400 mr-2">
+          <button type="button" data-top-nav="home" class="top-nav-link px-3 py-1.5 rounded-lg hover:text-zinc-900 dark:hover:text-white transition-colors">الرئيسية</button>
+          <button type="button" data-top-nav="getting-started" class="top-nav-link px-3 py-1.5 rounded-lg hover:text-zinc-900 dark:hover:text-white transition-colors">البداية والنشر</button>
+          <button type="button" data-top-nav="setup-guide" class="top-nav-link px-3 py-1.5 rounded-lg hover:text-zinc-900 dark:hover:text-white transition-colors">دليل الإعداد (Setup)</button>
+          <button type="button" data-top-nav="apps" class="top-nav-link px-3 py-1.5 rounded-lg hover:text-zinc-900 dark:hover:text-white transition-colors">التطبيقات (Apps)</button>
+          <button type="button" data-top-nav="usenet" class="top-nav-link px-3 py-1.5 rounded-lg hover:text-zinc-900 dark:hover:text-white transition-colors">دليل Usenet</button>
+          <button type="button" data-top-nav="formatter" class="top-nav-link px-3 py-1.5 rounded-lg hover:text-zinc-900 dark:hover:text-white transition-colors">المنسق و SEL</button>
+        </nav>
+      </div>
+
+      <!-- Left: Search + Theme + External Links -->
+      <div class="flex items-center gap-2">
+        <div class="relative w-44 sm:w-64">
+          <input id="docSearchInput" type="text" placeholder="ابحث في توثيق AIOStreams..." class="w-full bg-zinc-100 dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 text-xs rounded-lg pr-8 pl-12 py-1.5 border border-zinc-200 dark:border-zinc-800 focus:outline-none focus:border-violet-500 transition-colors" />
+          <svg class="w-3.5 h-3.5 text-zinc-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          <kbd class="hidden sm:inline-block absolute left-2 top-1/2 -translate-y-1/2 text-[10px] font-mono px-1.5 py-0.5 rounded bg-zinc-200 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400">⌘K</kbd>
+        </div>
+
+        <button id="themeToggleBtn" type="button" class="p-1.5 rounded-lg bg-zinc-100 dark:bg-zinc-900 text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-800 hover:border-violet-500/50 transition-colors" title="تبديل المظهر">
+          <span class="hidden dark:inline text-sm">☀️</span>
+          <span class="inline dark:hidden text-sm">🌙</span>
+        </button>
+
+        <a href="https://github.com/Viren070/AIOStreams" target="_blank" rel="noopener noreferrer" class="p-1.5 rounded-lg bg-zinc-100 dark:bg-zinc-900 text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-800 hover:border-violet-500/50 transition-colors" title="GitHub">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+        </a>
+
+        <a href="https://docs.aiostreams.viren070.me/" target="_blank" rel="noopener noreferrer" class="hidden sm:inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold bg-violet-600 hover:bg-violet-500 text-white transition-colors">
+          <span>الموقع الأصلي</span>
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+        </a>
+      </div>
+
+    </div>
+
+    <!-- Search Dropdown -->
+    <div id="searchDropdown" class="hidden max-w-2xl mx-auto px-4 pb-3">
+      <div class="bg-white dark:bg-[#111115] rounded-xl shadow-2xl border border-zinc-200 dark:border-zinc-800 p-3 max-h-80 overflow-y-auto custom-scrollbar">
+        <div class="flex items-center justify-between pb-2 mb-2 border-b border-zinc-100 dark:border-zinc-800">
+          <span id="searchCountLabel" class="text-xs font-bold text-violet-500">نتائج البحث</span>
+          <button id="closeSearchDropdownBtn" type="button" class="text-xs text-zinc-400 hover:text-zinc-200">إغلاق ✕</button>
+        </div>
+        <div id="searchMatchList" class="space-y-1"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main 3-Column Fumadocs Layout -->
+  <div class="max-w-[1440px] mx-auto w-full flex-1 flex relative">
+
+    <!-- Right Sidebar (Fumadocs Sidebar in RTL) -->
+    <aside id="docsSidebar" class="fixed lg:sticky top-14 right-0 z-30 w-64 h-[calc(100vh-3.5rem)] bg-white dark:bg-[#09090b] border-l border-zinc-200 dark:border-zinc-800/90 overflow-y-auto custom-scrollbar p-4 transition-transform duration-300 translate-x-full lg:translate-x-0 shrink-0">
+      <div id="sidebarTreeContainer" class="space-y-5"></div>
+    </aside>
+
+    <!-- Mobile Backdrop -->
+    <div id="mobileOverlay" class="fixed inset-0 bg-black/60 z-20 hidden lg:hidden"></div>
+
+    <!-- Center Content Column -->
+    <main class="flex-1 min-w-0 px-4 sm:px-8 lg:px-12 py-8">
+      
+      <!-- Top Breadcrumb & Action Bar -->
+      <div id="docHeaderActions" class="flex flex-wrap items-center justify-between gap-2 pb-4 mb-6 border-b border-zinc-200 dark:border-zinc-800/80 text-xs text-zinc-500 dark:text-zinc-400 max-w-4xl">
+        <div id="docBreadcrumbs" class="flex items-center gap-1.5 font-semibold"></div>
+        <div class="flex items-center gap-2">
+          <button id="copyPageMdBtn" type="button" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-zinc-100 dark:bg-zinc-900 hover:bg-zinc-200 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-800 font-medium transition-colors">
+            <span>📋 نسخ الصفحة (Copy Markdown)</span>
+          </button>
+          <a id="openOriginalPageLink" href="https://docs.aiostreams.viren070.me/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-zinc-100 dark:bg-zinc-900 hover:bg-zinc-200 dark:hover:bg-zinc-800 text-violet-600 dark:text-violet-400 border border-zinc-200 dark:border-zinc-800 font-semibold transition-colors">
+            <span>النسخة الإنجليزية ↗</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Article Body -->
+      <article id="docArticleBody" class="space-y-8 max-w-4xl"></article>
+
+      <!-- Prev / Next Navigation Cards -->
+      <div id="docPaginationCards" class="mt-12 pt-6 border-t border-zinc-200 dark:border-zinc-800/80 grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-4xl"></div>
+
+    </main>
+
+    <!-- Left Table of Contents ("On this page" in RTL) -->
+    <aside class="hidden xl:block w-60 shrink-0 sticky top-14 h-[calc(100vh-3.5rem)] overflow-y-auto custom-scrollbar p-5 border-r border-zinc-200/60 dark:border-zinc-800/50">
+      <div class="text-xs font-extrabold text-zinc-900 dark:text-zinc-200 mb-3 flex items-center gap-1.5">
+        <svg class="w-4 h-4 text-violet-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h10M4 18h7"/></svg>
+        <span>في هذه الصفحة (On this page)</span>
+      </div>
+      <div id="onThisPageToc" class="space-y-2 text-xs border-r-2 border-zinc-200 dark:border-zinc-800 pr-3"></div>
+    </aside>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="border-t border-zinc-200 dark:border-zinc-800/80 bg-white dark:bg-[#09090b] py-6 mt-12">
+    <div class="max-w-[1440px] mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500 dark:text-zinc-400">
+      <div class="flex items-center gap-2">
+        <img src="https://raw.githubusercontent.com/Viren070/AIOStreams/main/packages/frontend/public/assets/logo.png" alt="AIOStreams" class="w-5 h-5 rounded" onerror="this.style.display='none'" />
+        <span class="font-bold text-zinc-800 dark:text-zinc-200">توثيق AIOStreams الرسمي (النسخة العربية)</span>
+        <span>—</span>
+        <span>مترجم بالكامل من <a href="https://docs.aiostreams.viren070.me/" target="_blank" rel="noopener noreferrer" class="text-violet-500 hover:underline">docs.aiostreams.viren070.me</a></span>
+      </div>
+      <div class="flex flex-wrap items-center gap-4">
+        <a href="https://github.com/Viren070/AIOStreams" target="_blank" rel="noopener noreferrer" class="hover:text-violet-500">GitHub (Viren070/AIOStreams)</a>
+        <a href="https://docs.aiostreams.viren070.me/configuration/setup/" target="_blank" rel="noopener noreferrer" class="hover:text-violet-500">Setup Guide</a>
+        <a href="https://docs.aiostreams.viren070.me/guides/usenet/" target="_blank" rel="noopener noreferrer" class="hover:text-violet-500">Usenet Guide</a>
+        <a href="https://ko-fi.com/Viren070" target="_blank" rel="noopener noreferrer" class="hover:text-violet-500">Ko-fi</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ==========================================
+    // HELPER: CODE BLOCK RENDERER
+    // ==========================================
+    let codeBlockSeq = 0;
+    function renderCode(code, lang = 'bash', title = '') {
+      codeBlockSeq++;
+      const id = 'aio-code-' + codeBlockSeq;
+      const escaped = code
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+      return `
+        <div class="rounded-xl overflow-hidden bg-[#0d0d11] border border-zinc-800 my-3 shadow-sm">
+          <div class="flex items-center justify-between px-3.5 py-2 bg-zinc-900/90 border-b border-zinc-800 text-[11px] text-zinc-400">
+            <div class="flex items-center gap-2">
+              <span class="font-mono uppercase text-violet-400 font-bold">${lang}</span>
+              ${title ? `<span class="text-zinc-500 font-mono">${title}</span>` : ''}
+            </div>
+            <button type="button" onclick="copyCodeBlock('${id}')" class="px-2.5 py-0.5 rounded-md bg-zinc-800 hover:bg-violet-600 text-zinc-200 hover:text-white transition-colors font-sans text-xs font-semibold">
+              📋 نسخ
+            </button>
+          </div>
+          <pre id="${id}" class="p-4 text-xs font-mono text-zinc-100 overflow-x-auto leading-relaxed">${escaped}</pre>
+        </div>
+      `;
+    }
+
+    // ==========================================
+    // ALL DOCUMENTATION PAGES (MIRRORING DOCS.AIOSTREAMS.VIREN070.ME)
+    // ==========================================
+    const DOC_PAGES = [
+      // 1. HOME / LANDING PAGE
+      {
+        id: 'home',
+        section: 'نظرة عامة (Overview)',
+        title: 'AIOStreams — إضافة واحدة لجميع مصادرك وتطبيقاتك',
+        subtitle: 'إضافات Stremio وخدمات الديبريد و Usenet في قائمة واحدة، مفلترة ومرتبة ومنسقة بطريقتك، داخل Stremio أو في تطبيقات AIOStreams الخاصة.',
+        originalUrl: 'https://docs.aiostreams.viren070.me/',
+        toc: [
+          { id: 'sec-hero', label: 'نظرة عامة والصورة الرئيسية' },
+          { id: 'sec-what-it-does', label: 'ماذا يفعل AIOStreams؟ (المخطط)' },
+          { id: 'sec-your-rules', label: '🎛️ قواعدك الموحدة ومعاينة المنسق' },
+          { id: 'sec-sources', label: '🔌 المصادر والإضافات المدمجة (17 إضافة)' },
+          { id: 'sec-watch-anywhere', label: '📺 شاهد على أي شاشة (تطبيقات AIOStreams)' },
+          { id: 'sec-own-instance', label: '🏠 مزايا الاستضافة الخاصة ولوحة التحكم' }
+        ],
+        render: () => `
+          <!-- Hero Section matching docs.aiostreams.viren070.me -->
+          <section id="sec-hero" class="hero-glow rounded-3xl border border-zinc-200 dark:border-zinc-800 p-6 sm:p-10 text-center space-y-6 relative overflow-hidden">
+            <div class="flex flex-col items-center gap-3">
+              <img src="https://raw.githubusercontent.com/Viren070/AIOStreams/main/packages/frontend/public/assets/logo.png" alt="AIOStreams Logo" class="w-20 h-20 rounded-2xl shadow-2xl shadow-violet-500/20 object-contain" onerror="this.style.display='none'" />
+              <div class="inline-flex flex-wrap items-center justify-center gap-2 text-[11px] font-mono">
+                <span class="px-2.5 py-0.5 rounded-full bg-violet-500/15 text-violet-600 dark:text-violet-300 border border-violet-500/30 font-bold">v2.37.0 Latest</span>
+                <span class="px-2.5 py-0.5 rounded-full bg-amber-500/15 text-amber-600 dark:text-amber-300 border border-amber-500/30 font-bold">⭐ 3.1k GitHub Stars</span>
+                <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-300 border border-emerald-500/30 font-bold">Docker Pulls 1M+</span>
+                <span class="px-2.5 py-0.5 rounded-full bg-sky-500/15 text-sky-600 dark:text-sky-300 border border-sky-500/30 font-bold">AGPL-3.0</span>
+              </div>
+              <h1 class="text-2xl sm:text-4xl font-black tracking-tight max-w-2xl leading-tight">
+                إضافة واحدة لجميع مصادرك، وتطبيقات مخصصة للمشاهدة على كل شاشة
+              </h1>
+              <p class="text-xs sm:text-base text-zinc-600 dark:text-zinc-400 max-w-2xl leading-relaxed">
+                يجمع <strong>AIOStreams</strong> إضافات Stremio وخدمات الديبريد (Debrid) و <strong>Usenet</strong> معاً في قائمة واحدة موحدة، مفلترة ومرتبة ومنسقة بطريقتك الخاصة، ويشغلها داخل Stremio أو عبر تطبيقات AIOStreams المستقلة أو تطبيقات Jellyfin.
+              </p>
+              <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
+                <button type="button" onclick="navigateDoc('setup-guide')" class="px-5 py-2.5 rounded-xl bg-violet-600 hover:bg-violet-500 text-white font-bold text-xs sm:text-sm shadow-lg shadow-violet-600/25 transition-all">
+                  🚀 ابدأ دليل الإعداد السريع (Setup Guide)
+                </button>
+                <button type="button" onclick="navigateDoc('apps')" class="px-5 py-2.5 rounded-xl bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 hover:opacity-90 font-bold text-xs sm:text-sm transition-all">
+                  📱 تحميل تطبيق AIOStreams
+                </button>
+                <button type="button" onclick="navigateDoc('usenet')" class="px-5 py-2.5 rounded-xl bg-zinc-100 dark:bg-zinc-900 hover:bg-zinc-200 dark:hover:bg-zinc-800 text-zinc-800 dark:text-zinc-200 border border-zinc-300 dark:border-zinc-700 font-bold text-xs sm:text-sm transition-all">
+                  📡 دليل Usenet المدمج
+                </button>
+              </div>
+            </div>
+
+            <!-- Official Hero Image from docs.aiostreams.viren070.me/apps/hero.webp + Multi-Device Visual Frame -->
+            <div class="pt-4">
+              <div class="rounded-2xl overflow-hidden border border-zinc-200 dark:border-zinc-800 bg-zinc-950 shadow-2xl">
+                <img src="https://docs.aiostreams.viren070.me/apps/hero.webp" alt="تطبيق AIOStreams على التلفاز والكمبيوتر والهاتف" class="w-full h-auto object-cover" onerror="this.style.display='none'; document.getElementById('heroMockupFallback').classList.remove('hidden');" />
+                <!-- Fallback & Interactive Arabic Caption Overlay -->
+                <div id="heroMockupFallback" class="hidden p-6 bg-gradient-to-br from-violet-950 via-zinc-900 to-indigo-950 text-white">
+                  <div class="text-sm font-bold mb-2">🖥️📱📺 واجهة تطبيق AIOStreams على التلفاز والكمبيوتر والجوال</div>
+                </div>
+                <div class="px-4 py-2.5 bg-zinc-900/95 border-t border-zinc-800 text-[11px] text-zinc-400 flex items-center justify-between">
+                  <span>صورة العرض الرسمية: تطبيق AIOStreams يعمل على شاشة التلفاز، الكمبيوتر، والهاتف المحمول</span>
+                  <span class="font-mono text-violet-400">docs.aiostreams.viren070.me/apps/hero.webp</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Explore the Docs Cards (Exactly matching docs.aiostreams.viren070.me home cards) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-right pt-2">
+              <div onclick="navigateDoc('getting-started')" class="cursor-pointer p-4 rounded-2xl bg-white dark:bg-[#111115] border border-zinc-200 dark:border-zinc-800 hover:border-violet-500 transition-all">
+                <div class="text-xs font-extrabold text-violet-500 mb-1">🚀 Getting Started</div>
+                <div class="text-sm font-bold mb-1">البداية والنشر (Deployment)</div>
+                <p class="text-xs text-zinc-500 dark:text-zinc-400">استخدم نسخة عامة مجانية أو استضف نسختك الخاصة عبر Docker أو ElfHosted.</p>
+              </div>
+              <div onclick="navigateDoc('setup-guide')" class="cursor-pointer p-4 rounded-2xl bg-white dark:bg-[#111115] border border-zinc-200 dark:border-zinc-800 hover:border-violet-500 transition-all">
+                <div class="text-xs font-extrabold text-violet-500 mb-1">⚙️ Configuration</div>
+                <div class="text-sm font-bold mb-1">دليل الإعداد الشامل (Setup Guide)</div>
+                <p class="text-xs text-zinc-500 dark:text-zinc-400">امشِ خطوة بخطوة مع قالب Tamtaro الجاهز، ثم تعرف على كل خيار ومتغير بيئة.</p>
+              </div>
+              <div onclick="navigateDoc('apps')" class="cursor-pointer p-4 rounded-2xl bg-white dark:bg-[#111115] border border-zinc-200 dark:border-zinc-800 hover:border-violet-500 transition-all">
+                <div class="text-xs font-extrabold text-violet-500 mb-1">📺 Apps</div>
+                <div class="text-sm font-bold mb-1">تطبيقات AIOStreams و Jellyfin</div>
+                <p class="text-xs text-zinc-500 dark:text-zinc-400">شاهد مباشرة بدون Stremio على المتصفح، الكمبيوتر (mpv)، أندرويد، والشاشات الذكية.</p>
+              </div>
+              <div onclick="navigateDoc('usenet')" class="cursor-pointer p-4 rounded-2xl bg-white dark:bg-[#111115] border border-zinc-200 dark:border-zinc-800 hover:border-violet-500 transition-all">
+                <div class="text-xs font-extrabold text-violet-500 mb-1">📡 Guides</div>
+                <div class="text-sm font-bold mb-1">الأدلة المتقدمة (Usenet &amp; Failover)</div>
+                <p class="text-xs text-zinc-500 dark:text-zinc-400">محرك Usenet NNTP المدمج، المجموعات (Groups)، الترتيب بالنقاط، والتحويل التلقائي عند الفشل.</p>
+              </div>
+              <div onclick="navigateDoc('formatter')" class="cursor-pointer p-4 rounded-2xl bg-white dark:bg-[#111115] border border-zinc-200 dark:border-zinc-800 hover:border-violet-500 transition-all">
+                <div class="text-xs font-extrabold text-violet-500 mb-1">📐 Reference</div>
+                <div class="text-sm font-bold mb-1">تعبيرات SEL والمنسق المخصص</div>
+                <p class="text-xs text-zinc-500 dark:text-zinc-400">لغة تعبيرات البث (SEL)، تعبيرات الإعداد (Config Expressions)، والمنسق التفاعلي.</p>
+              </div>
+              <div onclick="navigateDoc('faq-troubleshooting')" class="cursor-pointer p-4 rounded-2xl bg-white dark:bg-[#111115] border border-zinc-200 dark:border-zinc-800 hover:border-violet-500 transition-all">
+                <div class="text-xs font-extrabold text-violet-500 mb-1">🛟 Help &amp; API</div>
+                <div class="text-sm font-bold mb-1">الأسئلة الشائعة وحل المشاكل والـ API</div>
+                <p class="text-xs text-zinc-500 dark:text-zinc-400">إجابات لأشهر الأسئلة، حلول الأخطاء الشائعة، وتوثيق واجهة البرمجة (REST API).</p>
+              </div>
+            </div>
+          </section>
+
+          <!-- Section: What it does + Exact Flowchart Diagram translated to Arabic -->
+          <section id="sec-what-it-does" class="space-y-4 pt-4">
+            <h2 class="text-xl sm:text-2xl font-extrabold border-b border-zinc-200 dark:border-zinc-800 pb-2">ماذا يفعل AIOStreams؟ (What it does)</h2>
+            <p class="text-xs sm:text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed">
+              بدلاً من التشتت بين عشرات الإضافات حيث تمتلك كل إضافة إعداداتها الخاصة وطريقتها المختلفة في عرض النتائج، تقوم بضبط <strong>AIOStreams مرة واحدة فقط</strong>. يقوم AIOStreamsبسؤال كل مصدر أضفته، ثم يزيل التكرارات (Deduplicate)، ويفلتر ويرتب ويسمّي النتائج وفق قواعدك أنت، ويقدم لك قائمة واحدة نظيفة أينما كنت تشاهد:
+            </p>
+
+            <!-- Visual Flowchart Replica (Matching the Mermaid diagram on docs.aiostreams.viren070.me) -->
+            <div class="p-6 rounded-2xl bg-white dark:bg-[#111115] border border-zinc-200 dark:border-zinc-800 shadow-sm">
+              <div class="text-xs font-bold text-zinc-400 mb-4 text-center">مخطط تدفق البيانات في AIOStreams (المصادر &larr; المعالجة الموحدة &larr; تطبيقات المشاهدة)</div>
+              <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 items-center">
+                
+                <!-- Column 1: Sources -->
+                <div class="p-4 rounded-2xl bg-zinc-50 dark:bg-zinc-900/90 border border-zinc-200 dark:border-zinc-800 space-y-2.5">
+                  <div class="text-xs font-extrabold text-violet-500 uppercase tracking-wider text-center pb-1 border-b border-zinc-200 dark:border-zinc-800">🔌 المصادر (Sources)</div>
+                  <div class="p-3 rounded-xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 text-center">
+                    <div class="text-xs font-bold">إضافات Stremio</div>
+                    <div class="text-[11px] text-zinc-500">+80 إضافة في المتجر أو عبر أي رابط URL</div>
+                  </div>
+                  <div class="p-3 rounded-xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 text-center">
+                    <div class="text-xs font-bold">الإضافات المدمجة (Built-in)</div>
+                    <div class="text-[11px] text-zinc-500">مفهرسات التورنت و Usenet، SeaDex، GDrive...</div>
+                  </div>
+                  <div class="p-3 rounded-xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 text-center">
+                    <div class="text-xs font-bold">خدمات Debrid و Usenet</div>
+                    <div class="text-[11px] text-zinc-500">Real-Debrid، TorBox، Easynews، NNTP...</div>
+                  </div>
+                </div>
+
+                <!-- Column 2: AIOStreams Core Hexagon -->
+                <div class="flex flex-col items-center justify-center py-2">
+                  <div class="hidden lg:flex items-center text-violet-500 text-xs font-bold mb-2">⟵ تدفق النتائج الخام ⟵</div>
+                  <div class="w-full max-w-xs p-6 rounded-3xl bg-gradient-to-br from-violet-600 via-indigo-600 to-purple-700 text-white text-center shadow-xl shadow-violet-600/25 border border-violet-400/30">
+                    <div class="text-lg font-black mb-1">AIOStreams</div>
+                    <div class="text-xs font-mono text-violet-100">dedupe · filter · sort · format</div>
+                    <div class="mt-3 pt-3 border-t border-white/20 text-[11px] text-violet-100 leading-relaxed">
+                      إزالة التكرارات • الفلترة الذكية • الترتيب بالنقاط • التنسيق الموحد • التحويل التلقائي (Failover)
+                    </div>
+                  </div>
+                  <div class="hidden lg:flex items-center text-emerald-500 text-xs font-bold mt-2">⟵ قائمة موحدة جاهزة للتشغيل ⟵</div>
+                </div>
+
+                <!-- Column 3: Where you watch -->
+                <div class="p-4 rounded-2xl bg-zinc-50 dark:bg-zinc-900/90 border border-zinc-200 dark:border-zinc-800 space-y-2.5">
+                  <div class="text-xs font-extrabold text-emerald-500 uppercase tracking-wider text-center pb-1 border-b border-zinc-200 dark:border-zinc-800">📺 أين تشاهد (Where you watch)</div>
+                  <div class="p-3 rounded-xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 text-center">
+                    <div class="text-xs font-bold">تطبيق Stremio</div>
+                    <div class="text-[11px] text-zinc-500">كإضافة واحدة تغنيك عن كل الإضافات الأخرى</div>
+                  </div>
+                  <div class="p-3 rounded-xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 text-center">
+                    <div class="text-xs font-bold">تطبيق AIOStreams المستقل</div>
+                    <div class="text-[11px] text-zinc-500">المتصفح، سطح المكتب، أندرويد، والشاشات الذكية</div>
+                  </div>
+                  <div class="p-3 rounded-xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 text-center">
+                    <div class="text-xs font-bold">تطبيقات Jellyfin</div>
+                    <div class="text-[11px] text-zinc-500">Infuse، Swiftfin، Findroid، Kodi...</div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </section>
+
+          <!-- Section: Your Rules + Live Formatter Visual Screenshot Replica -->
+          <section id="sec-your-rules" class="space-y-4 pt-4">
+            <h2 class="text-xl sm:text-2xl font-extrabold border-b border-zinc-200 dark:border-zinc-800 pb-2">🎛️ قواعدك الموحدة (Your rules)</h2>
+            <p class="text-xs sm:text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed">
+              لأن كل مصدر يمر عبر AIOStreams، فإنك تضبط قواعدك مرة واحدة فقط وتُطبّق تلقائياً على جميع الإضافات:
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs sm:text-sm">
+              <div class="p-4 rounded-xl bg-white dark:bg-[#111115] border border-zinc-200 dark:border-zinc-800">
+                <strong class="text-violet-500">🔬 فلاتر شاملة ودقيقة:</strong> فلترة حسب الدقة (4K/1080p)، الجودة (BluRay REMUX/WEB-DL)، الترميز (HEVC/AV1)، النطاق الديناميكي (HDR10+/Dolby Vision)، الصوت (Atmos/TrueHD 7.1)، اللغة، الحجم، معدل البت (Bitrate)، السيدرز، وحالة الكاش، مع مطابقة صارمة للعناوين والسنوات والحلقات.
+              </div>
+              <div class="p-4 rounded-xl bg-white dark:bg-[#111115] border border-zinc-200 dark:border-zinc-800">
+                <strong class="text-violet-500">📊 ترتيب ذكي ومنفصل:</strong> رتب النتائج بأي معيار، مع إمكانية تخصيص ترتيب منفصل للأفلام والمسلسلات والأنمي، وترتيب منفصل للروابط المخزنة (Cached) مقابل غير المخزنة.
+              </div>
+              <div class="p-4 rounded-xl bg-white dark:bg-[#111115] border border-zinc-200 dark:border-zinc-800">
+                <strong class="text-violet-500">🧹 إزالة التكرارات وتعبيرات SEL:</strong> إزالة الملفات المكررة عبر اسم الملف أو الـ InfoHash أو بصمة الملف الذكية، واستخدام <strong>Stream Expressions</strong> لقواعد تعتمد على القائمة كاملة (مثل حذف 720p فقط إذا توفر أكثر من 5 روابط 1080p).
+              </div>
+              <div class="p-4 rounded-xl bg-white dark:bg-[#111115] border border-zinc-200 dark:border-zinc-800">
+                <strong class="text-violet-500">🗂️ إدارة القوائم والمجموعات والقوالب:</strong> إعادة تسمية وترتيب ودمج وخلط القوائم (Catalogs) مع دعم بوسترات RPDB، ومجموعات الإضافات الاحتياطية (Groups)، والنسخ الفرعية (Variants)، والقوالب الجاهزة (Templates).
+              </div>
+            </div>
+
+            <!-- Visual Replica of "The formatter's live preview, naming a stream from its release's filename" -->
+            <div class="rounded-2xl overflow-hidden border border-zinc-200 dark:border-zinc-800 bg-[#0c0c10] text-zinc-100 shadow-lg">
+              <div class="px-4 py-2.5 bg-zinc-900 border-b border-zinc-800 flex flex-wrap items-center justify-between gap-2">
+                <div class="flex items-center gap-2 text-xs font-bold text-violet-400">
+                  <span>🎨 معاينة المنسق الحية (Formatter Live Preview)</span>
+                </div>
+                <div class="flex items-center gap-1.5 text-[11px]">
+                  <span class="text-zinc-400">اختر نمط العرض:</span>
+                  <button type="button" onclick="setPreviewFormat('prism')" id="fmt-btn-prism" class="fmt-mode-btn px-2.5 py-1 rounded bg-violet-600 text-white font-bold">Prism</button>
+                  <button type="button" onclick="setPreviewFormat('gdrive')" id="fmt-btn-gdrive" class="fmt-mode-btn px-2.5 py-1 rounded bg-zinc-800 text-zinc-300">Light GDrive</button>
+                  <button type="button" onclick="setPreviewFormat('torrentio')" id="fmt-btn-torrentio" class="fmt-mode-btn px-2.5 py-1 rounded bg-zinc-800 text-zinc-300">Torrentio</button>
+                </div>
+              </div>
+              <div class="p-5 grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
+                <div class="lg:col-span-7 space-y-2">
+                  <div class="text-[11px] font-mono text-zinc-400">Parsed Filename: <span class="text-emerald-400">Dune.Part.Two.2024.2160p.UHD.BluRay.REMUX.DV.HDR10+.TrueHD.7.1.Atmos.HEVC-FraMeSToR.mkv</span></div>
+                  <div class="p-3 rounded-xl bg-zinc-900/90 border border-zinc-800 font-mono text-xs text-violet-300 leading-relaxed" dir="ltr" id="formatterTemplateCode">
+                    ⚡ [RD+] 4K UHD • BluRay REMUX | DV • HDR10+ | TrueHD Atmos 7.1 | 68.4 GB | FraMeSToR
+                  </div>
+                </div>
+                <div class="lg:col-span-5">
+                  <div class="p-4 rounded-xl bg-[#16161d] border border-violet-500/40 shadow-inner flex items-start gap-3" dir="ltr">
+                    <div class="px-2.5 py-1.5 rounded-lg bg-violet-600/20 border border-violet-500/40 text-violet-300 font-mono text-xs font-extrabold shrink-0" id="formatterPreviewName">
+                      ⚡ RD+ 4K
+                    </div>
+                    <div class="text-xs font-mono text-zinc-200 space-y-1 leading-snug" id="formatterPreviewDesc">
+                      <div class="font-bold text-white">🎬 BluRay REMUX • HEVC</div>
+                      <div class="text-amber-300">✨ DV • HDR10+ | 🔊 TrueHD Atmos 7.1</div>
+                      <div class="text-zinc-400">📦 68.4 GB • 🏷️ FraMeSToR • 🇬🇧 EN</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="px-4 py-2 bg-zinc-950 border-t border-zinc-800/80 text-[11px] text-zinc-500 text-center">
+                المعاينة الحية للمنسق في AIOStreams: تقوم بتحليل اسم ملف الإصدار وتنسيقه تلقائياً حسب القالب الذي تختاره
+              </div>
+            </div>
+          </section>
+
+          <!-- Section: Sources & Full Built-in Addons Table -->
+          <section id="sec-sources" class="space-y-4 pt-4">
+            <h2 class="text-xl sm:text-2xl font-extrabold border-b border-zinc-200 dark:border-zinc-800 pb-2">🔌 المصادر والإضافات المدمجة (Sources &amp; Built-in Addons)</h2>
+            <p class="text-xs sm:text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed">
+              بالإضافة إلى متجر الإضافات الذي يضم <strong>أكثر من 80 إضافة مجتمعية</strong> (مثل Torrentio و Comet و MediaFusion)، يأتي AIOStreams مزوداً بـ <strong>17 إضافة مدمجة (Built-in Addons)</strong> تعمل داخله مباشرة وتدعم الأنمي وقوائم Kitsu و MAL:
+            </p>
+            <div class="overflow-x-auto rounded-2xl border border-zinc-200 dark:border-zinc-800">
+              <table class="w-full text-right text-xs sm:text-sm border-collapse bg-white dark:bg-[#111115]">
+                <thead>
+                  <tr class="bg-zinc-100 dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-800">
+                    <th class="p-3 font-extrabold">الإضافة المدمجة (Built-in Addon)</th>
+                    <th class="p-3 font-extrabold">الوظيفة وما تبحث فيه</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-zinc-200 dark:divide-zinc-800/80">
+                  <tr><td class="p-3 font-mono font-bold text-violet-500">Knaben</td><td class="p-3">محرك بحث شامل يبحث عبر The Pirate Bay و 1337x و Nyaa والمزيد.</td></tr>
+                  <tr><td class="p-3 font-mono font-bold text-violet-500">The Pirate Bay / TheRARBG</td><td class="p-3">البحث في The Pirate Bay و TheRARBG بواسطة العنوان ومعرف IMDb ID.</td></tr>
+                  <tr><td class="p-3 font-mono font-bold text-violet-500">Torrent Galaxy / EZTV</td><td class="p-3">البحث عن الأفلام والمسلسلات في Torrent Galaxy والمسلسلات في EZTV.</td></tr>
+                  <tr><td class="p-3 font-mono font-bold text-violet-500">Zilean / Bitmagnet</td><td class="p-3">البحث في قاعدة بيانات Zilean (DMM hashlist) أو زاحف Bitmagnet DHT المستضاف ذاتياً.</td></tr>
+                  <tr><td class="p-3 font-mono font-bold text-violet-500">SeaDex</td><td class="p-3">قاعدة البيانات المجتمعية لأفضل إصدارات الأنمي المختارة بعناية (Best Anime Releases).</td></tr>
+                  <tr><td class="p-3 font-mono font-bold text-violet-500">AnimeTosho / NekoBT / Tsukihime</td><td class="p-3">أقوى مصادر الأنمي (Nyaa و TokyoTosho و nekoBT و Tsukihime مع مطابقة MAL و AniDB).</td></tr>
+                  <tr><td class="p-3 font-mono font-bold text-violet-500">Prowlarr, Jackett, NZBHydra2</td><td class="p-3">ربط مديري المفهرسات الخاصة بك للبحث في جميع التراكرات ومفهرسات Usenet دفعة واحدة.</td></tr>
+                  <tr><td class="p-3 font-mono font-bold text-violet-500">Newznab, Torznab</td><td class="p-3">ربط أي مفهرس Usenet (Newznab) أو مفهرس تورنت (Torznab) مباشرة عبر الرابط ومفتاح الـ API.</td></tr>
+                  <tr><td class="p-3 font-mono font-bold text-violet-500">Easynews Search</td><td class="p-3">البحث في فهرس Easynews للويب وتشغيل النتائج مباشرة أو كملفات NZB.</td></tr>
+                  <tr><td class="p-3 font-mono font-bold text-violet-500">Stremio GDrive &amp; Library</td><td class="p-3">البث من حسابك في Google Drive، أو تصفح وتشغيل الملفات الموجودة مسبقاً في مكتبة الديبريد أو Usenet الخاصة بك.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- Section: Watch Anywhere & Own Instance Dashboard Preview -->
+          <section id="sec-watch-anywhere" class="space-y-4 pt-4">
+            <h2 class="text-xl sm:text-2xl font-extrabold border-b border-zinc-200 dark:border-zinc-800 pb-2">📺 شاهد في أي مكان (Watch anywhere)</h2>
+            <p class="text-xs sm:text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed">
+              لا يقتصر AIOStreams على العمل كإضافة داخل Stremio فحسب؛ بل إن كل إعداد (Configuration) يعمل تلقائياً كـ <strong>خادم وسائط متوافق مع Jellyfin</strong> وله تطبيقاته المستقلة لكل الشاشات!
+            </p>
+            <div class="overflow-x-auto rounded-2xl border border-zinc-200 dark:border-zinc-800">
+              <table class="w-full text-right text-xs sm:text-sm border-collapse bg-white dark:bg-[#111115]">
+                <thead>
+                  <tr class="bg-zinc-100 dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-800">
+                    <th class="p-3 font-bold">المنصة</th>
+                    <th class="p-3 font-bold">التطبيق</th>
+                    <th class="p-3 font-bold">المشغل المدعوم والمزايا</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-zinc-200 dark:divide-zinc-800/80">
+                  <tr><td class="p-3 font-bold">أي متصفح ويب</td><td class="p-3">تطبيق الويب (PWA) بدون تثبيت</td><td class="p-3">يعمل مباشرة في المتصفح ويمكن إضافته لشاشة الهاتف الرئيسية.</td></tr>
+                  <tr><td class="p-3 font-bold">Windows, macOS, Linux</td><td class="p-3">تطبيق سطح المكتب (Desktop App)</td><td class="p-3">مشغل <strong>mpv</strong> المدمج: يشغل كافة الصيغ، HDR، تمرير الصوت المحيطي (Passthrough)، وترجمات ASS المنسقة.</td></tr>
+                  <tr><td class="p-3 font-bold">هواتف وأجهزة Android</td><td class="p-3">تطبيق الأندرويد</td><td class="p-3">مشغل <strong>ExoPlayer أو mpv</strong> مع دعم HDR و Dolby Vision والتحميل للمشاهدة بدون إنترنت.</td></tr>
+                  <tr><td class="p-3 font-bold">Android TV, Google TV, Fire TV</td><td class="p-3">تطبيق التلفاز (واجهة ريموت)</td><td class="p-3">مصمم للتحكم بالريموت مع تسجيل دخول سريع عبر رمز <strong>Quick Connect</strong>.</td></tr>
+                  <tr><td class="p-3 font-bold">شاشات LG (webOS) و Samsung (Tizen)</td><td class="p-3">تطبيقات الشاشات الذكية (Beta)</td><td class="p-3">تثبيت عبر ملف <code>.ipk</code> أو <code>.wgt</code> مع استخدام المشغل الأصلي للشاشة.</td></tr>
+                  <tr><td class="p-3 font-bold">iPhone, iPad, Apple TV, Kodi</td><td class="p-3">المتصفح أو تطبيقات Jellyfin</td><td class="p-3">ربط مباشر مع تطبيقات مثل <strong>Infuse</strong> و <strong>Swiftfin</strong> و <strong>Findroid</strong> و <strong>Kodi</strong>!</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- Section: On Your Own Instance + Dashboard Visual Mockup -->
+          <section id="sec-own-instance" class="space-y-4 pt-4">
+            <h2 class="text-xl sm:text-2xl font-extrabold border-b border-zinc-200 dark:border-zinc-800 pb-2">🏠 في نسختك الخاصة (On your own instance)</h2>
+            <p class="text-xs sm:text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed">
+              استضافة AIOStreams بنفسك (أو عبر نسخة ElfHosted الخاصة) تمنحك مزايا خارقة لا تتوفر في النسخ العامة:
+            </p>
+            <ul class="list-disc list-inside text-xs sm:text-sm text-zinc-600 dark:text-zinc-300 space-y-1.5">
+              <li><strong>محرك Usenet NNTP مدمج بالكامل:</strong> أسرع محرك في اختبارات الأداء العامة لبدء التشغيل (First Byte) والتقديم/التأخير (Seek) بدون الحاجة لـ NzbDAV أو AltMount.</li>
+              <li><strong>تكامل Sonarr و Radarr كعميل SABnzbd:</strong> يمكن لـ Sonarr و Radarr إرسال ملفات NZB إلى AIOStreams ليبثها Plex أو Jellyfin أو Emby عند الطلب بدون استهلاك مساحة القرص!</li>
+              <li><strong>قائمة حظر الإصدارات التالفة (Release Blocklist):</strong> يتذكر الإصدارات المعطوبة أو المزيفة ويستبعدها تلقائياً قبل تجربتها.</li>
+              <li><strong>لوحة تحكم شاملة للمشغل (`/dashboard`):</strong> مراقبة البث المباشر واستهلاك الباندويث، الإحصائيات، السجلات، المستخدمين، مكتبة ومزودي Usenet، الكاش، وكل إعدادات التشغيل الحية.</li>
+            </ul>
+
+            <!-- Visual Replica of "The dashboard, with two streams through the built-in proxy" -->
+            <div class="rounded-2xl overflow-hidden border border-zinc-200 dark:border-zinc-800 bg-[#0b0b0f] text-zinc-100 shadow-xl">
+              <div class="px-4 py-2.5 bg-zinc-900 border-b border-zinc-800 flex items-center justify-between text-xs">
+                <div class="flex items-center gap-2 font-bold">
+                  <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                  <span>لوحة تحكم المشغل (AIOStreams Operator Dashboard — /dashboard)</span>
+                </div>
+                <span class="font-mono text-[11px] text-zinc-400">Built-in Proxy Active: 2 Streams</span>
+              </div>
+              <div class="p-5 space-y-4">
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+                  <div class="p-3 rounded-xl bg-zinc-900/80 border border-zinc-800">
+                    <div class="text-[11px] text-zinc-400">البث النشط (Live Streams)</div>
+                    <div class="text-lg font-black text-emerald-400 font-mono">2 Active</div>
+                  </div>
+                  <div class="p-3 rounded-xl bg-zinc-900/80 border border-zinc-800">
+                    <div class="text-[11px] text-zinc-400">سرعة النقل الحالية</div>
+                    <div class="text-lg font-black text-violet-400 font-mono">142.8 Mbps</div>
+                  </div>
+                  <div class="p-3 rounded-xl bg-zinc-900/80 border border-zinc-800">
+                    <div class="text-[11px] text-zinc-400">محرك Usenet NNTP</div>
+                    <div class="text-lg font-black text-sky-400 font-mono">20 / 50 Conn</div>
+                  </div>
+                  <div class="p-3 rounded-xl bg-zinc-900/80 border border-zinc-800">
+                    <div class="text-[11px] text-zinc-400">كاش ملفات NZB</div>
+                    <div class="text-lg font-black text-amber-400 font-mono">64 MB / 1 GB</div>
+                  </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs font-mono" dir="ltr">
+                  <div class="p-3.5 rounded-xl bg-zinc-900/60 border border-zinc-800 space-y-1">
+                    <div class="flex items-center justify-between text-emerald-400 font-bold">
+                      <span>▶ Stream #1 (Built-in Proxy • Usenet NNTP)</span>
+                      <span>84.2 Mbps</span>
+                    </div>
+                    <div class="text-zinc-300 truncate">Oppenheimer.2023.2160p.UHD.BluRay.REMUX.DV.HDR10+.TrueHD.7.1.mkv</div>
+                    <div class="text-zinc-500 text-[11px]">User: alice • Client: AIOStreams Desktop (mpv) • Backbone: Omicron</div>
+                  </div>
+                  <div class="p-3.5 rounded-xl bg-zinc-900/60 border border-zinc-800 space-y-1">
+                    <div class="flex items-center justify-between text-violet-400 font-bold">
+                      <span>▶ Stream #2 (Built-in Proxy • Real-Debrid)</span>
+                      <span>58.6 Mbps</span>
+                    </div>
+                    <div class="text-zinc-300 truncate">The.Bear.S03E01.2160p.WEB-DL.DDP5.1.Atmos.DV.HDR.H.265-FLUX.mkv</div>
+                    <div class="text-zinc-500 text-[11px]">User: family-tv • Client: Infuse (Apple TV) • Failover: Ready</div>
+                  </div>
+                </div>
+              </div>
+              <div class="px-4 py-2 bg-zinc-950 border-t border-zinc-800/80 text-[11px] text-zinc-500 text-center">
+                لوحة تحكم AIOStreams تعرض حالتي بث نشطتين عبر البروكسي المدمج ومحرك Usenet
+              </div>
+            </div>
+          </section>
+        `
+      },
+
+      // 2. GETTING STARTED & DEPLOYMENT
+      {
+        id: 'getting-started',
+        section: 'البداية (Getting Started)',
+        title: 'البداية والنشر والاستضافة (Getting Started & Deployment)',
+        subtitle: 'اختر طريقة تشغيل AIOStreams: نسخة عامة مجانية، أو استضافة ذاتية عبر Docker، أو استضافة مُدارة عبر ElfHosted.',
+        originalUrl: 'https://docs.aiostreams.viren070.me/getting-started/deployment/',
+        toc: [
+          { id: 'dep-choices', label: 'طرق تشغيل AIOStreams الثلاث' },
+          { id: 'dep-docker-compose', label: 'التثبيت السريع عبر Docker Compose' },
+          { id: 'dep-secret-key', label: 'توليد مفتاح التشفير SECRET_KEY' },
+          { id: 'dep-gluetun', label: 'تجاوز حجب الـ IP عبر Gluetun & Gost' }
+        ],
+        render: () => `
+          <section id="dep-choices" class="space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div class="p-5 rounded-2xl bg-white dark:bg-[#111115] border border-zinc-200 dark:border-zinc-800 space-y-2">
+                <div class="text-xs font-extrabold text-emerald-500">الخيار الأول (مجاني وفوري)</div>
+                <h3 class="text-base font-extrabold">🌐 النسخ العامة (Public Instances)</h3>
+                <p class="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                  استخدم نسخة يستضيفها المجتمع (مثل <strong>Yeb's</strong> أو <strong>ElfHosted</strong> أو <strong>Viren's</strong>) مجاناً وبدون أي إعداد تقني. مثالية للبدء الفوري.
+                </p>
+              </div>
+              <div class="p-5 rounded-2xl bg-white dark:bg-[#111115] border border-violet-500/50 space-y-2">
+                <div class="text-xs font-extrabold text-violet-500">الخيار الثاني (تحكم كامل)</div>
+                <h3 class="text-base font-extrabold">🐳 الاستضافة الذاتية (Self-Host)</h3>
+                <p class="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                  شغّل AIOStreams بنفسك عبر Docker على خادمك (مثل Oracle VPS المجاني) لتحصل على محرك Usenet المدمج، البروكسي المدمج، ولوحة التحكم الكاملة بدون أي حدود.
+                </p>
+              </div>
+              <div class="p-5 rounded-2xl bg-white dark:bg-[#111115] border border-zinc-200 dark:border-zinc-800 space-y-2">
+                <div class="text-xs font-extrabold text-sky-500">الخيار الثالث (استضافة مُدارة)</div>
+                <h3 class="text-base font-extrabold">☁️ ElfHosted / NodStack الخاصة</h3>
+                <p class="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                  احصل على نسخة خاصة بك مُدارة بالكامل مع تحديثات تلقائية وبروكسي سريع دون الحاجة لإدارة خادم أو Docker (33% من الاشتراك يدعم مطور AIOStreams).
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section id="dep-docker-compose" class="space-y-3 pt-4">
+            <h2 class="text-xl font-extrabold border-b border-zinc-200 dark:border-zinc-800 pb-2">التشغيل السريع عبر Docker Compose (خلال دقيقتين)</h2>
+            <p class="text-xs sm:text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed">
+              لتشغيل نسختك الخاصة من AIOStreams v2، قم بتحميل ملف <code>compose.yaml</code> وملف <code>.env.sample</code> الرسميين من مستودع GitHub:
+            </p>
+            ${renderCode(`curl -O https://raw.githubusercontent.com/Viren070/AIOStreams/main/compose.yaml
+curl -o .env https://raw.githubusercontent.com/Viren070/AIOStreams/main/.env.sample
+# اضبط متغير SECRET_KEY و BASE_URL داخل ملف .env ثم شغّل الحاوية:
+docker compose up -d`, 'bash', 'Quick Start Commands')}
+
+            <p class="text-xs sm:text-sm text-zinc-600 dark:text-zinc-300">إليك شكل ملف <code>compose.yaml</code> القياسي للإصدار الثاني (v2) مع المجلد الدائم الإجباري <code>./data:/app/data</code>:</p>
+            ${renderCode(`services:
+  aiostreams:
+    image: ghcr.io/viren070/aiostreams:latest # أو viren070/aiostreams:latest
+    container_name: aiostreams
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    volumes:
+      - ./data:/app/data # ضروري جداً لحفظ قاعدة البيانات والإعدادات والكاش`, 'yaml', 'compose.yaml')}
+          </section>
+
+          <section id="dep-secret-key" class="space-y-3 pt-4">
+            <h2 class="text-xl font-extrabold border-b border-zinc-200 dark:border-zinc-800 pb-2">توليد مفتاح التشفير الإجباري <code>SECRET_KEY</code></h2>
+            <p class="text-xs sm:text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed">
+              لن يعمل AIOStreams بدون ضبط المتغيرين <code>BASE_URL</code> و <code>SECRET_KEY</code> في ملف <code>.env</code>. يجب أن يتكون <code>SECRET_KEY</code> من <strong>64 محرفاً سداسياً عشرياً (64-character hex string)</strong> لتشفير إعدادات المستخدمين ومفاتيحهم، ولا يجب تغييره بعد التشغيل الأول:
+            </p>
+            ${renderCode(`# على أنظمة Linux و macOS:
+openssl rand -hex 32
+
+# على نظام Windows (PowerShell):
+-join ((0..31) | ForEach-Object { '{0:x2}' -f (Get-Random -Minimum 0 -Maximum 255) })`, 'bash', 'Generate 64-char hex SECRET_KEY')}
+          </section>
+
+          <section id="dep-gluetun" class="space-y-3 pt-4">
+            <h2 class="text-xl font-extrabold border-b border-zinc-200 dark:border-zinc-800 pb-2">تجاوز حجب عناوين IP الخوادم السحابية (Gluetun VPN + Gost Proxy)</h2>
+            <p class="text-xs sm:text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed">
+              بعض الإضافات الخارجية (مثل Torrentio على نطاقات <code>*.strem.fun</code>) قد تحجب عناوين IP الخاصة بخوادم Oracle VPS. يمكنك تمرير طلبات تلك الإضافات فقط عبر حاوية VPN مثل <strong>Gluetun + Gost</strong> باستخدام إعدادات البروكسي الصادر في AIOStreams:
+            </p>
+            ${renderCode(`# إعدادات البروكسي الصادر (يمكن ضبطها من لوحة التحكم Settings -> HTTP أو في .env):
+ADDON_PROXY=http://gluetun:8080
+ADDON_PROXY_CONFIG=*:false,*.strem.fun:true`, 'ini', 'Outbound Proxy Routing')}
+          </section>
+        `
+      },
+
+      // 3. SETUP GUIDE (TAMTARO'S COMPLETE SETUP)
+      {
+        id: 'setup-guide',
+        section: 'الإعداد والضبط (Configuration)',
+        title: 'دليل الإعداد الشامل خطوة بخطوة (Setup Guide)',
+        subtitle: 'قم بتشغيل وضبط AIOStreams من الصفر باستخدام قالب Tamtaro المتكامل (Tamtaro Complete SEL Setup) وأنماط Vidhin.',
+        originalUrl: 'https://docs.aiostreams.viren070.me/configuration/setup/',
+        toc: [
+          { id: 'sg-credits', label: 'حول قالب Tamtaro & Vidhin' },
+          { id: 'sg-step1-2', label: 'الخطوة 1 و 2: العميل وخدمة الديبريد' },
+          { id: 'sg-step3', label: 'الخطوة 3: مفاتيح TMDB و TVDB المجانية' },
+          { id: 'sg-step4', label: 'الخطوة 4: اختيار النسخة وفتح القالب (تفاعلي)' },
+          { id: 'sg-step5-6', label: 'الخطوة 5 و 6: استيراد القالب والحفظ والتثبيت' }
+        ],
+        render: () => `
+          <!-- Template Credits Callout -->
+          <section id="sg-credits" class="p-5 rounded-2xl bg-violet-500/10 border border-violet-500/30 space-y-2 text-xs sm:text-sm">
+            <div class="font-extrabold text-violet-600 dark:text-violet-300 flex items-center gap-2">
+              <span>✨ شكر وتقدير لمطوري القالب (Template Credits)</span>
+            </div>
+            <p class="text-zinc-700 dark:text-zinc-300 leading-relaxed">
+              يعتمد هذا الدليل الرسمي على القالب الشامل الذي بناه ويحدثه باستمرار <strong>Tam-Taro</strong> (<code>@tam.taro</code> على ديسكورد) والذي يضبط قواعد الفلترة والترتيب بلغة <strong>Stream Expression Language (SEL)</strong>، بالإضافة إلى أنماط <strong>Vidhin's Regex Patterns</strong> التي تجلب تصنيفات <strong>TRaSH Guides</strong> لفرق الرفع داخل AIOStreams.
+            </p>
+          </section>
+
+          <!-- Steps 1 & 2 -->
+          <section id="sg-step1-2" class="space-y-4 pt-2">
+            <div class="p-5 rounded-2xl bg-white dark:bg-[#111115] border border-zinc-200 dark:border-zinc-800 space-y-3">
+              <div class="flex items-center gap-2.5">
+                <span class="step-badge w-7 h-7 rounded-full bg-violet-600 text-white font-extrabold text-xs flex items-center justify-center">1</span>
+                <h2 class="text-base sm:text-lg font-extrabold">الخطوة 1 — تثبيت مشغل الوسائط (Install a Media Client)</h2>
+              </div>
+              <ol class="list-decimal list-inside text-xs sm:text-sm text-zinc-600 dark:text-zinc-300 space-y-1.5 leading-relaxed">
+                <li>توجه إلى <a href="https://www.stremio.com/downloads" target="_blank" rel="noopener noreferrer" class="text-violet-500 underline font-semibold">stremio.com/downloads</a> وحمّل النسخة المناسبة لجهازك (يُنصح بإجراء الإعداد الأولي على الكمبيوتر أو اللابتوب).</li>
+                <li>افتح Stremio وأنشئ حساباً مجانياً أو سجل الدخول.</li>
+                <li>انتقل إلى صفحة <strong>الإضافات (Addons)</strong> وقم <strong>بإلغاء تثبيت إضافة Watchhub</strong> لأنها تعرض إعلانات ومدفوعات غير مفيدة.</li>
+              </ol>
+            </div>
+
+            <div class="p-5 rounded-2xl bg-white dark:bg-[#111115] border border-zinc-200 dark:border-zinc-800 space-y-3">
+              <div class="flex items-center gap-2.5">
+                <span class="step-badge w-7 h-7 rounded-full bg-violet-600 text-white font-extrabold text-xs flex items-center justify-center">2</span>
+                <h2 class="text-base sm:text-lg font-extrabold">الخطوة 2 — الاشتراك في خدمة ديبريد (اختياري ولكنه موصى به بشدة)</h2>
+              </div>
+              <p class="text-xs sm:text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed">
+                تحتفظ خدمات الديبريد (مثل <strong>Real-Debrid</strong> و <strong>TorBox</strong> و <strong>Premiumize</strong>) بكاش ضخم من ملفات التورنت على خوادمها، مما يمنحك بثاً فورياً بسرعات فائقة عبر بروتوكول HTTPS لدقات <strong>4K و HDR و Dolby Atmos</strong> بدون تقطيع، وبدون الاعتماد على السيدرز، ودون الحاجة لأي VPN.
+              </p>
+            </div>
+          </section>
+
+          <!-- Step 3: API Keys -->
+          <section id="sg-step3" class="p-5 rounded-2xl bg-white dark:bg-[#111115] border border-zinc-200 dark:border-zinc-800 space-y-4">
+            <div class="flex items-center gap-2.5">
+              <span class="step-badge w-7 h-7 rounded-full bg-violet-600 text-white font-extrabold text-xs flex items-center justify-center">3</span>
+              <h2 class="text-base sm:text-lg font-extrabold">الخطوة 3 — الحصول على مفاتيح الـ API المجانية (TMDB &amp; TVDB)</h2>
+            </div>
+            <p class="text-xs sm:text-sm text-zinc-600 dark:text-zinc-300">يستخدم القالب مفتاحين مجانيين لمطابقة أسماء الأفلام والمواسم والحلقات بدقة واستبعاد الملفات الخاطئة:</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="p-4 rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 space-y-1.5 text-xs">
+                <div class="font-extrabold text-sm text-violet-500">1. مفتاح TMDB (The Movie Database)</div>
+                <ol class="list-decimal list-inside space-y-1 text-zinc-600 dark:text-zinc-300">
+                  <li>سجل حساباً مجانياً في <a href="https://www.themoviedb.org/" target="_blank" rel="noopener noreferrer" class="text-violet-500 underline">themoviedb.org</a>.</li>
+                  <li>افتح <strong>Account Settings &rarr; API</strong> واضغط <strong>Create</strong> واختر <strong>Developer</strong>.</li>
+                  <li>املأ النموذج بأي بيانات (لا يتم التحقق منها) وانسخ مفتاح <strong>API Key</strong>.</li>
+                </ol>
+              </div>
+              <div class="p-4 rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 space-y-1.5 text-xs">
+                <div class="font-extrabold text-sm text-violet-500">2. مفتاح TVDB (The TV Database)</div>
+                <ol class="list-decimal list-inside space-y-1 text-zinc-600 dark:text-zinc-300">
+                  <li>سجل حساباً مجانياً في <a href="https://thetvdb.com/" target="_blank" rel="noopener noreferrer" class="text-violet-500 underline">thetvdb.com</a>.</li>
+                  <li>انتقل إلى صفحة <strong>API Information</strong> وولّد مفتاح API جديداً وانسخه.</li>
+                </ol>
+              </div>
+            </div>
+          </section>
+
+          <!-- Step 4: Interactive Public Instance & Template Launcher (Mirroring docs.aiostreams.viren070.me/configuration/setup/) -->
+          <section id="sg-step4" class="p-5 rounded-2xl bg-white dark:bg-[#111115] border border-violet-500/40 space-y-4 shadow-md">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div class="flex items-center gap-2.5">
+                <span class="step-badge w-7 h-7 rounded-full bg-violet-600 text-white font-extrabold text-xs flex items-center justify-center">4</span>
+                <h2 class="text-base sm:text-lg font-extrabold">الخطوة 4 — اختر النسخة وافتح القالب مباشرة (Open the Template)</h2>
+              </div>
+              <div class="inline-flex items-center gap-1 bg-zinc-100 dark:bg-zinc-900 p-1 rounded-xl border border-zinc-200 dark:border-zinc-800 text-xs">
+                <span class="px-2 text-zinc-400">القناة (Channel):</span>
+                <button type="button" id="chan-stable" onclick="setInstanceChannel('stable')" class="px-2.5 py-1 rounded-lg font-mono font-bold text-zinc-500">stable</button>
+                <button type="button" id="chan-nightly" onclick="setInstanceChannel('nightly')" class="px-2.5 py-1 rounded-lg font-mono font-bold bg-violet-600 text-white">nightly (موصى به)</button>
+              </div>
+            </div>
+
+            <p class="text-xs sm:text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed">
+              تُعد نسخة <strong>Yeb's (<code>@nhyyeb</code>)</strong> نقطة البداية الموصى بها لمعظم المستخدمين، ويفضل اختيار قناة <strong>nightly</strong> لأن قالب Tamtaro يُطور ويُختبر عليها. اختر النسخة التي تريد فتح القالب عليها:
+            </p>
+
+            <!-- Instance Cards Grid -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2.5" id="instanceSelectorGrid">
+              <button type="button" onclick="selectPublicInstance('yeb')" data-inst="yeb" class="inst-card p-3 rounded-xl border-2 border-violet-500 bg-violet-500/10 text-right transition-all">
+                <div class="text-xs font-extrabold">Yeb's ⭐</div>
+                <div class="text-[10px] text-zinc-400 font-mono">@nhyyeb</div>
+              </button>
+              <button type="button" onclick="selectPublicInstance('elfhosted')" data-inst="elfhosted" class="inst-card p-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-right transition-all">
+                <div class="text-xs font-extrabold">ElfHosted</div>
+                <div class="text-[10px] text-zinc-400 font-mono">ElfHosted</div>
+              </button>
+              <button type="button" onclick="selectPublicInstance('midnight')" data-inst="midnight" class="inst-card p-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-right transition-all">
+                <div class="text-xs font-extrabold">Midnight's</div>
+                <div class="text-[10px] text-zinc-400 font-mono">@midnightignite</div>
+              </button>
+              <button type="button" onclick="selectPublicInstance('viren')" data-inst="viren" class="inst-card p-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-right transition-all">
+                <div class="text-xs font-extrabold">Viren's</div>
+                <div class="text-[10px] text-zinc-400 font-mono">@viren_7</div>
+              </button>
+              <button type="button" onclick="selectPublicInstance('kuu')" data-inst="kuu" class="inst-card p-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-right transition-all">
+                <div class="text-xs font-extrabold">Kuu's</div>
+                <div class="text-[10px] text-zinc-400 font-mono">ATBP Hosting</div>
+              </button>
+              <button type="button" onclick="selectPublicInstance('omni')" data-inst="omni" class="inst-card p-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-right transition-all">
+                <div class="text-xs font-extrabold">Omni's</div>
+                <div class="text-[10px] text-zinc-400 font-mono">@a.ves</div>
+              </button>
+              <button type="button" onclick="selectPublicInstance('custom')" data-inst="custom" class="inst-card p-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-right transition-all">
+                <div class="text-xs font-extrabold">نسختي الخاصة</div>
+                <div class="text-[10px] text-zinc-400 font-mono">Self-hosted</div>
+              </button>
+            </div>
+
+            <div id="customInstanceInputWrap" class="hidden">
+              <label class="block text-xs font-bold mb-1">رابط نسختك الخاصة (Base URL):</label>
+              <input id="customInstanceUrlInput" type="text" value="https://aiostreams.yourdomain.com" oninput="updateTemplateLauncherLink()" class="w-full px-3 py-2 rounded-xl text-xs font-mono bg-zinc-100 dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700" dir="ltr" />
+            </div>
+
+            <div class="p-4 rounded-xl bg-zinc-100 dark:bg-zinc-900/90 border border-zinc-200 dark:border-zinc-800 flex flex-col sm:flex-row items-center justify-between gap-3">
+              <div class="text-xs space-y-0.5 text-center sm:text-right">
+                <div id="selectedInstanceLabel" class="font-bold text-zinc-900 dark:text-white">فتح القالب على نسخة Yeb's (Nightly)</div>
+                <div id="selectedInstanceUrlText" class="font-mono text-[11px] text-zinc-500" dir="ltr">https://aiostreams-nightly.fortheweak.cloud/stremio/configure</div>
+              </div>
+              <a id="openTemplateActionBtn" href="https://aiostreams-nightly.fortheweak.cloud/stremio/configure" target="_blank" rel="noopener noreferrer" class="px-5 py-2.5 rounded-xl bg-violet-600 hover:bg-violet-500 text-white text-xs font-extrabold shadow-md transition-all shrink-0">
+                🚀 فتح القالب (Open Template) ↗
+              </a>
+            </div>
+          </section>
+
+          <!-- Steps 5 & 6 -->
+          <section id="sg-step5-6" class="space-y-4">
+            <div class="p-5 rounded-2xl bg-white dark:bg-[#111115] border border-zinc-200 dark:border-zinc-800 space-y-3">
+              <div class="flex items-center gap-2.5">
+                <span class="step-badge w-7 h-7 rounded-full bg-violet-600 text-white font-extrabold text-xs flex items-center justify-center">5</span>
+                <h2 class="text-base sm:text-lg font-extrabold">الخطوة 5 — معالج استيراد القالب (Import the Template)</h2>
+              </div>
+              <ol class="list-decimal list-inside text-xs sm:text-sm text-zinc-600 dark:text-zinc-300 space-y-2 leading-relaxed">
+                <li><strong>اختيار القالب:</strong> سيظهر لك خياران: <code>Tamtaro Complete SEL Setup</code> و <code>Tamtaro Partial SEL Setup</code>. اختر <strong>Complete</strong> ثم اضغط <strong>Use Selected</strong>.</li>
+                <li><strong>اختيار الخدمات (Select services):</strong> حدد خدمات الديبريد التي تمتلكها (مثل Real-Debrid أو TorBox) أو اضغط Skip إذا كنت تستخدم P2P فقط.</li>
+                <li><strong>مدخلات القالب (Template inputs):</strong>
+                  <ul class="list-disc list-inside mr-5 mt-1 space-y-1 text-zinc-500 dark:text-zinc-400">
+                    <li><strong>Preferred Language:</strong> اختر لغات الصوت المفضلة لديك (مثل English أو Arabic).</li>
+                    <li><strong>TorBox Tier:</strong> (لمستخدمي TorBox) اختر باقتك (Essential / Standard / Pro) لضبط الحد الأقصى لحجم التنزيل غير المخزن.</li>
+                    <li><strong>Core Filtering Engine:</strong> اتركه على <code>Standard SEL</code> لقائمة نظيفة ومختصرة، أو اختر <code>Extended SEL</code> إذا كنت تفضل ظهور نتائج أكثر.</li>
+                  </ul>
+                </li>
+                <li><strong>إدخال المفاتيح (Credential inputs):</strong> أدخل مفتاح الديبريد ومفتاحي <strong>TMDB</strong> و <strong>TVDB</strong> ثم اضغط <strong>Load Template</strong>.</li>
+              </ol>
+            </div>
+
+            <div class="p-5 rounded-2xl bg-white dark:bg-[#111115] border border-zinc-200 dark:border-zinc-800 space-y-3">
+              <div class="flex items-center gap-2.5">
+                <span class="step-badge w-7 h-7 rounded-full bg-violet-600 text-white font-extrabold text-xs flex items-center justify-center">6</span>
+                <h2 class="text-base sm:text-lg font-extrabold">الخطوة 6 — الحفظ والتثبيت والنسخ الاحتياطي (Save &amp; Install)</h2>
+              </div>
+              <ul class="list-disc list-inside text-xs sm:text-sm text-zinc-600 dark:text-zinc-300 space-y-2 leading-relaxed">
+                <li>تحت قسم <strong>Create Configuration</strong>، أدخل كلمة مرور واضغط <strong>Create</strong>. سيظهر لك معرف <strong>UUID</strong> خاص بك — <strong>احفظ الـ UUID وكلمة المرور في مكان آمن</strong> لأنه لا يمكن استعادتهما في حال ضياعهما.</li>
+                <li>إذا ظهر خطأ <code>Failed to fetch manifest for &lt;addon&gt;</code>، اذهب لقائمة Addons وعطّل تلك الإضافة مؤقتاً ثم اضغط Create مرة أخرى.</li>
+                <li>اضغط <strong>Install to Stremio</strong> (أو انسخ <strong>Manifest URL</strong>، أو افتحه مباشرة في <strong>AIOStreams App</strong>).</li>
+                <li><strong>نصيحة هامة:</strong> اضغط زر <strong>Export</strong> في قسم Backups لتحميل نسخة احتياطية بصيغة JSON من إعداداتك الكاملة!</li>
+              </ul>
+            </div>
+          </section>
+        `
+      },
+
+      // 4. CONFIGURE OPTIONS & ENVIRONMENT VARIABLES
+      {
+        id: 'env-and-options',
+        section: 'الإعداد والضبط (Configuration)',
+        title: 'متغيرات البيئة وخيارات الضبط (Environment Variables & Options)',
+        subtitle: 'الفرق الجوهري بين متغيرات الإقلاع (Bootstrap .env) وإعدادات التشغيل الحية (Runtime Settings) في لوحة التحكم.',
+        originalUrl: 'https://github.com/Viren070/AIOStreams/blob/main/.env.sample',
+        toc: [
+          { id: 'env-two-types', label: 'نوعا الإعدادات: Bootstrap مقابل Runtime' },
+          { id: 'env-table', label: 'جدول متغيرات ملف .env الأساسية' },
+          { id: 'env-permissions', label: 'صلاحيات المشغلين AIOSTREAMS_AUTH_PERMISSIONS' }
+        ],
+        render: () => `
+          <section id="env-two-types" class="p-5 rounded-2xl bg-amber-500/10 border border-amber-500/30 space-y-2 text-xs sm:text-sm">
+            <div class="font-extrabold text-amber-600 dark:text-amber-300">💡 بنية الإعدادات الجديدة في AIOStreams (منذ الإصدار v2.30+)</div>
+            <p class="text-zinc-700 dark:text-zinc-300 leading-relaxed">
+              ينقسم الضبط في AIOStreams إلى قسمين:
+              <br>1. <strong>متغيرات الإقلاع (Bootstrap Variables في ملف <code>.env</code>):</strong> تُقرأ قبل تشغيل قاعدة البيانات (مثل المنفذ، التشفير، قاعدة البيانات، وحسابات المشغلين). يجب وضعها في ملف <code>.env</code>.
+              <br>2. <strong>إعدادات التشغيل الحية (Runtime Settings):</strong> كل شيء آخر (اسم الإضافة، الإضافات المدمجة، البروكسي، الكاش، حدود الطلبات، محرك Usenet) يُحفظ في قاعدة البيانات ويُعدّل مباشرة وبشكل حي من صفحة <strong>Settings في لوحة التحكم (<code>/dashboard</code>)</strong>! (وإذا وضعت متغيراً منها في <code>.env</code> فسيتم قفله للقراءة فقط في الواجهة).
+            </p>
+          </section>
+
+          <section id="env-table" class="space-y-3 pt-2">
+            <h2 class="text-xl font-extrabold border-b border-zinc-200 dark:border-zinc-800 pb-2">جدول متغيرات البيئة الأساسية في ملف <code>.env</code></h2>
+            <div class="overflow-x-auto rounded-2xl border border-zinc-200 dark:border-zinc-800">
+              <table class="w-full text-right text-xs sm:text-sm border-collapse bg-white dark:bg-[#111115]">
+                <thead>
+                  <tr class="bg-zinc-100 dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-800">
+                    <th class="p-3 font-bold">المتغير (Variable)</th>
+                    <th class="p-3 font-bold">الحالة</th>
+                    <th class="p-3 font-bold">الشرح ومثال القيمة</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-zinc-200 dark:divide-zinc-800/80">
+                  <tr>
+                    <td class="p-3 font-mono font-bold text-violet-500">BASE_URL</td>
+                    <td class="p-3 text-rose-500 font-bold">إجباري</td>
+                    <td class="p-3">الرابط الأساسي لنسختك شاملاً البروتوكول، مثل: <code>https://aiostreams.yourdomain.com</code></td>
+                  </tr>
+                  <tr>
+                    <td class="p-3 font-mono font-bold text-violet-500">SECRET_KEY</td>
+                    <td class="p-3 text-rose-500 font-bold">إجباري</td>
+                    <td class="p-3">سلسلة hex بطول 64 حرفاً لتشفير بيانات المستخدمين في قاعدة البيانات.</td>
+                  </tr>
+                  <tr>
+                    <td class="p-3 font-mono font-bold text-violet-500">DATABASE_URI</td>
+                    <td class="p-3 text-rose-500 font-bold">إجباري</td>
+                    <td class="p-3">يدعم SQLite (<code>sqlite://./data/db.sqlite</code>) أو PostgreSQL (<code>postgres://user:pass@host:5432/db</code>).</td>
+                  </tr>
+                  <tr>
+                    <td class="p-3 font-mono font-bold text-violet-500">DISK_CACHE_DIR</td>
+                    <td class="p-3 text-zinc-400">اختياري</td>
+                    <td class="p-3">مسار حفظ كاش مقاطع Usenet وملفات NZB على القرص (الافتراضي <code>./data/cache</code>).</td>
+                  </tr>
+                  <tr>
+                    <td class="p-3 font-mono font-bold text-violet-500">AIOSTREAMS_AUTH</td>
+                    <td class="p-3 text-emerald-500 font-bold">مهم للمشغل</td>
+                    <td class="p-3">حسابات المشغلين بصيغة <code>user1:pass1,user2:pass2</code> للدخول للوحة التحكم واستخدام البروكسي و Usenet.</td>
+                  </tr>
+                  <tr>
+                    <td class="p-3 font-mono font-bold text-violet-500">REDIS_URI</td>
+                    <td class="p-3 text-zinc-400">اختياري</td>
+                    <td class="p-3">يُستخدم فقط عند تشغيل عدة نسخ متوازية (Docker Swarm). للحاوية الواحدة اتركه فارغاً لأن كاش الذاكرة أسرع.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section id="env-permissions" class="space-y-3 pt-4">
+            <h2 class="text-xl font-extrabold border-b border-zinc-200 dark:border-zinc-800 pb-2">نظام الصلاحيات الدقيق (<code>AIOSTREAMS_AUTH_PERMISSIONS</code>)</h2>
+            <p class="text-xs sm:text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed">
+              يمكنك تحديد صلاحيات كل مستخدم عرفته في <code>AIOSTREAMS_AUTH</code> (أي مستخدم غير مذكور هنا يحصل تلقائياً على صلاحية <code>admin</code> الكاملة):
+            </p>
+            ${renderCode(`AIOSTREAMS_AUTH=alice:secret123,bob:pass456,carol:pass789
+AIOSTREAMS_AUTH_PERMISSIONS=alice=admin,bob=proxy|sabnzbd,carol=service|createConfig`, 'ini', '.env Operator Permissions')}
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 text-xs">
+              <div class="p-3 rounded-xl bg-white dark:bg-[#111115] border border-zinc-200 dark:border-zinc-800"><code class="text-violet-500 font-bold">admin</code>: دخول لوحة التحكم <code>/dashboard</code> وجميع الصلاحيات الأخرى.</div>
+              <div class="p-3 rounded-xl bg-white dark:bg-[#111115] border border-zinc-200 dark:border-zinc-800"><code class="text-violet-500 font-bold">proxy</code>: السماح بتمرير البث ومقتطفات NZB عبر البروكسي المدمج.</div>
+              <div class="p-3 rounded-xl bg-white dark:bg-[#111115] border border-zinc-200 dark:border-zinc-800"><code class="text-violet-500 font-bold">service</code>: استخدام محرك Usenet المدمج وخدمات AIOStreams الأصلية.</div>
+              <div class="p-3 rounded-xl bg-white dark:bg-[#111115] border border-zinc-200 dark:border-zinc-800"><code class="text-violet-500 font-bold">sabnzbd</code>: استخدام نقطة اتصال SABnzbd API (لتكامل Sonarr و Radarr).</div>
+              <div class="p-3 rounded-xl bg-white dark:bg-[#111115] border border-zinc-200 dark:border-zinc-800"><code class="text-violet-500 font-bold">createConfig</code>: السماح بإنشاء ملف إعداد جديد على النسخة المحمية.</div>
+              <div class="p-3 rounded-xl bg-white dark:bg-[#111115] border border-zinc-200 dark:border-zinc-800"><code class="text-violet-500 font-bold">none</code>: تسجيل الدخول لصفحة الإعداد المحمية فقط بدون ميزات إضافية.</div>
+            </div>
+          </section>
+        `
+      },
+
+      // 5. APPS & JELLYFIN MEDIA SERVER
+      {
+        id: 'apps',
+        section: 'التطبيقات (Apps)',
+        title: 'تطبيقات AIOStreams المستقلة وخادم Jellyfin المدمج',
+        subtitle: 'شاهد أعمالك المفضلة مباشرة عبر تطبيقات AIOStreams للكمبيوتر والأندرويد والتلفاز أو عبر تطبيقات Jellyfin مثل Infuse و Swiftfin.',
+        originalUrl: 'https://docs.aiostreams.viren070.me/apps/',
+        toc: [
+          { id: 'apps-overview', label: 'كيف تعمل تطبيقات AIOStreams؟' },
+          { id: 'apps-visual-preview', label: 'معاينة واجهة التطبيق ونسخ الفيلم (Versions)' },
+          { id: 'apps-features', label: 'مزايا المشغل والحسابات العائلية' },
+          { id: 'apps-smart-tv', label: 'التثبيت على Linux و webOS و Tizen' }
+        ],
+        render: () => `
+          <section id="apps-overview" class="space-y-3">
+            <p class="text-xs sm:text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed">
+              تتحول قوائمك (Catalogs) داخل تطبيق <strong>AIOStreams</strong> إلى مكتبات منظمة، وتتحول روابط البث إلى <strong>نسخ متعددة للعمل (Versions)</strong> مرتبة ومُسمّاة حسب قواعدك! والأجمل أنك لا تحتاج لاستضافة أي خادم إضافي: فكل إعداد (Configuration) في AIOStreams يتحدث بروتوكول <strong>Jellyfin API</strong> مباشرة، بحيث يمكنك تسجيل الدخول إليه من تطبيق AIOStreams نفسه أو من أي عميل Jellyfin (مثل <strong>Infuse</strong> على Apple TV/iOS أو <strong>Swiftfin</strong> أو <strong>Findroid</strong> أو <strong>Kodi</strong>).
+            </p>
+          </section>
+
+          <!-- Visual Replica of "Browsing the AIOStreams app, opening a title and its versions" -->
+          <section id="apps-visual-preview" class="rounded-2xl overflow-hidden border border-zinc-200 dark:border-zinc-800 bg-[#0c0c12] text-white shadow-xl">
+            <div class="px-4 py-2.5 bg-zinc-900 border-b border-zinc-800 flex items-center justify-between text-xs">
+              <span class="font-bold text-violet-400">🎬 معاينة واجهة تطبيق AIOStreams — صفحة العمل واختيار النسخة (Versions)</span>
+              <span class="font-mono text-[11px] text-zinc-400">mpv / ExoPlayer HDR &amp; Dolby Vision</span>
+            </div>
+            <div class="p-6 bg-gradient-to-t from-[#0c0c12] via-[#131320] to-[#1e1b38] space-y-4">
+              <div class="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4">
+                <div class="space-y-1.5">
+                  <div class="inline-flex items-center gap-2 text-[11px] font-mono text-amber-300">
+                    <span>★ 8.8 IMDb</span>
+                    <span>•</span>
+                    <span>2024</span>
+                    <span>•</span>
+                    <span>2h 46m</span>
+                    <span>•</span>
+                    <span class="px-1.5 py-0.5 rounded bg-white/10 text-white">4K DV Atmos</span>
+                  </div>
+                  <h3 class="text-2xl font-black">Dune: Part Two</h3>
+                  <p class="text-xs text-zinc-300 max-w-xl">اختر النسخة (Version) المناسبة، أو بدّل النسخة أثناء المشاهدة، أو افتحها في مشغل خارجي مثل VLC أو Infuse:</p>
+                </div>
+                <div class="flex gap-2">
+                  <span class="px-4 py-2 rounded-xl bg-violet-600 text-white text-xs font-extrabold">▶ تشغيل الآن</span>
+                  <span class="px-3 py-2 rounded-xl bg-white/10 text-white text-xs font-bold">👥 مشاهدة جماعية (Watch Together)</span>
+                </div>
+              </div>
+
+              <!-- Versions List -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5 pt-2" dir="ltr">
+                <div class="p-3 rounded-xl bg-violet-600/20 border border-violet-500/50 flex items-center justify-between text-xs font-mono">
+                  <div>
+                    <div class="font-bold text-white">⚡ [AIO Usenet] 4K UHD BluRay REMUX</div>
+                    <div class="text-[11px] text-violet-200">DV • HDR10+ • TrueHD Atmos 7.1 • 68.4 GB</div>
+                  </div>
+                  <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-[10px]">Instant NNTP</span>
+                </div>
+                <div class="p-3 rounded-xl bg-zinc-900/90 border border-zinc-800 flex items-center justify-between text-xs font-mono">
+                  <div>
+                    <div class="font-bold text-zinc-200">⚡ [RD+] 4K WEB-DL • FLUX</div>
+                    <div class="text-[11px] text-zinc-400">DV • HDR • DDP 5.1 Atmos • 24.1 GB</div>
+                  </div>
+                  <span class="px-2 py-0.5 rounded bg-violet-500/20 text-violet-300 text-[10px]">Cached</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="apps-features" class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+            <div class="p-5 rounded-2xl bg-white dark:bg-[#111115] border border-zinc-200 dark:border-zinc-800 space-y-2 text-xs sm:text-sm">
+              <h3 class="font-extrabold text-violet-500">🎧 تحكم متقدم بالمشغل والترجمة</h3>
+              <p class="text-zinc-600 dark:text-zinc-300 leading-relaxed">
+                اختيار لغات الصوت والترجمة المفضلة تلقائياً، دعم ترجمات الأنمي المنسقة (Styled ASS)، مزامنة الترجمة سمعياً أو باختيار الجملة المنطوقة، معاينات مصغرة عند التقديم (Seek Previews)، وتخطي المقدمات والنهايات تلقائياً (Skip Intro/Credits).
+              </p>
+            </div>
+            <div class="p-5 rounded-2xl bg-white dark:bg-[#111115] border border-zinc-200 dark:border-zinc-800 space-y-2 text-xs sm:text-sm">
+              <h3 class="font-extrabold text-violet-500">👨‍👩‍👧‍👦 حسابات متعددة للعائلة ومشاهدة جماعية</h3>
+              <p class="text-zinc-600 dark:text-zinc-300 leading-relaxed">
+                يحصل كل فرد في المنزل على ملفه الشخصي (مع سجل Continue Watching مستقل ورمز PIN اختياري)، وتسجل الشاشات الذكية دخولها عبر كود <strong>Quick Connect</strong>، مع ميزة <strong>Watch Together</strong> للمشاهدة المتزامنة مع الأصدقاء مع الدردشة والتفاعلات.
+              </p>
+            </div>
+          </section>
+
+          <section id="apps-smart-tv" class="space-y-3 pt-2">
+            <h2 class="text-lg font-extrabold">أوامر تثبيت تطبيقات Linux (Flatpak) وشاشات LG webOS و Samsung Tizen</h2>
+            ${renderCode(`# تثبيت حزمة Flatpak على نظام Linux:
+flatpak install --user
+
+# تثبيت ملف .ipk على شاشات LG (webOS) عبر أداة ares-install:
+pnpm exec ares-setup-device
+pnpm exec ares-install --device <name> out/io.github.viren070.aiostreams_<version>_all.ipk
+
+# تثبيت ملف .wgt على شاشات Samsung (Tizen):
+sdb connect <tv-ip>
+tizen install -n out/AIOStreams.wgt -t <device-name>`, 'bash', 'Desktop & Smart TV CLI Installation')}
+          </section>
+        `
+      },
+
+      // 6. USENET GUIDE (COMPLETE TRANSLATION OF USENET.MDX)
+      {
+        id: 'usenet',
+        section: 'الأدلة المتقدمة (Guides)',
+        title: 'دليل Usenet الشامل (Usenet Streaming Guide)',
+        subtitle: 'كيف تبحث وتبث محتوى Usenet مباشرة عبر محرك NNTP المدمج في AIOStreams أو عبر NzbDAV و TorBox و Easynews.',
+        originalUrl: 'https://github.com/Viren070/AIOStreams/blob/main/packages/docs/content/docs/guides/usenet.mdx',
+        toc: [
+          { id: 'un-how', label: 'كيف يعمل Usenet في 60 ثانية؟' },
+          { id: 'un-pick', label: '1. اختيار خدمة التشغيل (مقارنة الطرق الـ 5)' },
+          { id: 'un-builtin', label: '2. إعداد المحرك المدمج (Built-in Engine)' },
+          { id: 'un-companions', label: 'إعداد NzbDAV و AltMount و TorBox و Easynews' },
+          { id: 'un-indexers', label: '3. إضافة المفهرسات (Indexers)' },
+          { id: 'un-failover', label: '4. التحويل التلقائي عند الفشل (Failover)' },
+          { id: 'un-grabs', label: '5. قواعد سحب NZB وتوحيد عنوان الـ IP' }
+        ],
+        render: () => `
+          <section id="un-how" class="space-y-3">
+            <div class="p-5 rounded-2xl bg-violet-500/10 border border-violet-500/30 text-xs sm:text-sm space-y-2">
+              <div class="font-extrabold text-violet-600 dark:text-violet-300">📡 كيف يعمل بث Usenet في AIOStreams؟ (Usenet in 60 Seconds)</div>
+              <p class="text-zinc-700 dark:text-zinc-300 leading-relaxed">
+                يعتمد Usenet في AIOStreams على شقين: <strong>1) إضافات (Addons)</strong> تبحث في المفهرسات (Indexers) وتجلب ملفات <code>.nzb</code>، و <strong>2) خدمة تشغيل (Playback Service)</strong> تحول ملف الـ NZB إلى بث فيديو مباشر.
+                <br>• <strong>نصيحة ذهبية حول المزودين (Backbones):</strong> لا تبالغ في تكديس مزودي Usenet؛ الجمع بين عمودين فقريين مختلفين (مثل <strong>Omicron + Abavia</strong>، مع ضبط الثاني كـ <strong>Backup</strong>) يغطي الغالبية العظمى من المحتوى بأقصى سرعة، وإذا نقصت مقاطع في كليهما فإن ميزة <strong>Failover</strong> ستنتقل تلقائياً لإصدار آخر سليم!
+              </p>
+            </div>
+          </section>
+
+          <!-- 1. Pick a Playback Service Table -->
+          <section id="un-pick" class="space-y-3 pt-2">
+            <h2 class="text-xl font-extrabold border-b border-zinc-200 dark:border-zinc-800 pb-2">1. اختر خدمة التشغيل المناسبة لك (Pick a Playback Service)</h2>
+            <div class="overflow-x-auto rounded-2xl border border-zinc-200 dark:border-zinc-800">
+              <table class="w-full text-right text-xs sm:text-sm border-collapse bg-white dark:bg-[#111115]">
+                <thead>
+                  <tr class="bg-zinc-100 dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-800">
+                    <th class="p-3 font-bold">خدمة التشغيل</th>
+                    <th class="p-3 font-bold">رمز النتيجة</th>
+                    <th class="p-3 font-bold">كيف تعمل وأين يجري البث؟</th>
+                    <th class="p-3 font-bold">ماذا تحتاج؟</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-zinc-200 dark:divide-zinc-800/80">
+                  <tr>
+                    <td class="p-3 font-bold text-emerald-500">AIOStreams (المحرك المدمج ⭐)</td>
+                    <td class="p-3 font-mono font-bold">AIO</td>
+                    <td class="p-3">يبث عبر بروتوكول NNTP مباشرة من داخل نسخة AIOStreams الخاصة بك (الأسرع في بدء التشغيل والـ Seek).</td>
+                    <td class="p-3">نسخة AIOStreams خاصة (مستضافة ذاتياً أو ElfHosted خاصة) + مزود NNTP + مفهرسات.</td>
+                  </tr>
+                  <tr>
+                    <td class="p-3 font-bold text-violet-500">NzbDAV / AltMount / StremThru Newz</td>
+                    <td class="p-3 font-mono font-bold">ND / AM / ST</td>
+                    <td class="p-3">تركّب ملفات NZB كنظام ملفات افتراضي (WebDAV) وتبث من خادم الأداة.</td>
+                    <td class="p-3">أداة مستضافة ذاتياً + مزود NNTP + مفهرسات.</td>
+                  </tr>
+                  <tr>
+                    <td class="p-3 font-bold text-sky-500">Stremio NNTP</td>
+                    <td class="p-3 font-mono font-bold">SN</td>
+                    <td class="p-3">يبث مباشرة داخل تطبيق Stremio نفسه بدون أي خادم وسيط!</td>
+                    <td class="p-3">يعمل فقط على <strong>Stremio Desktop v5</strong> و <strong>Stremio Android TV</strong> + مزود + مفهرسات.</td>
+                  </tr>
+                  <tr>
+                    <td class="p-3 font-bold text-amber-500">TorBox Pro</td>
+                    <td class="p-3 font-mono font-bold">TB</td>
+                    <td class="p-3">يحمل الإصدار كاملاً لخوادم TorBox أولاً ثم يبثه فوراً على أي جهاز (يدعم ميزة <strong>Cache and Play</strong>).</td>
+                    <td class="p-3">اشتراك <strong>TorBox Pro</strong> (يشمل أيضاً خادم NNTP على شبكة Abavia) + مفهرساتك الخاصة.</td>
+                  </tr>
+                  <tr>
+                    <td class="p-3 font-bold text-pink-500">Easynews</td>
+                    <td class="p-3 font-mono font-bold">EN</td>
+                    <td class="p-3">روابط HTTP مباشرة من خوادم Easynews بدون استضافة وبدون مفهرسات خارجية.</td>
+                    <td class="p-3">اشتراك Easynews فقط (يشمل أيضاً وصول NNTP عادي).</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- 2. Built-in Engine Setup -->
+          <section id="un-builtin" class="p-5 rounded-2xl bg-white dark:bg-[#111115] border border-zinc-200 dark:border-zinc-800 space-y-3">
+            <h2 class="text-lg font-extrabold text-emerald-500">2. إعداد المحرك المدمج (The Built-In Engine — الأسرع والأبسط)</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+              <div class="p-4 rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 space-y-1.5">
+                <div class="font-extrabold text-zinc-900 dark:text-white">أ) إعداد لوحة التحكم (مرة واحدة للمشغل):</div>
+                <ol class="list-decimal list-inside space-y-1 text-zinc-600 dark:text-zinc-300">
+                  <li>عيّن متغير <code>AIOSTREAMS_AUTH=alice:secret</code> في ملف <code>.env</code>.</li>
+                  <li>سجل الدخول إلى <strong><code>/dashboard/usenet</code> (Usenet &rarr; Providers)</strong> بحساب يملك صلاحية <code>admin</code>.</li>
+                  <li>أضف بيانات خادم NNTP الخاص بك (Host, Port, SSL, Username, Password, Max Connections). يمكنك تحديد مزود ثانٍ كـ <strong>Backup</strong>.</li>
+                </ol>
+              </div>
+              <div class="p-4 rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 space-y-1.5">
+                <div class="font-extrabold text-zinc-900 dark:text-white">ب) إعداد صفحة المستخدم (<code>/stremio/configure</code>):</div>
+                <ol class="list-decimal list-inside space-y-1 text-zinc-600 dark:text-zinc-300">
+                  <li>انتقل إلى تبويب <strong>Services</strong> وفعل خدمة <strong>AIOStreams</strong>.</li>
+                  <li>أدخل <strong>AIOStreams Auth Token</strong> بصيغة <code>username:password</code> (يحتاج صلاحية <code>service</code>).</li>
+                  <li>يوفر المحرك أيضاً واجهة متوافقة مع <strong>SABnzbd API</strong> على المسار <code>/api/v1/sabnzbd</code> لربطه مع Sonarr و Radarr!</li>
+                </ol>
+              </div>
+            </div>
+          </section>
+
+          <!-- Companion Tools: URL vs Public URL -->
+          <section id="un-companions" class="p-5 rounded-2xl bg-white dark:bg-[#111115] border border-zinc-200 dark:border-zinc-800 space-y-3">
+            <h2 class="text-lg font-extrabold text-violet-500">إعداد NzbDAV و AltMount: الفرق الحاسم بين <code>URL</code> و <code>Public URL</code></h2>
+            <p class="text-xs sm:text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed">
+              إذا كنت تستخدم NzbDAV أو AltMount على نفس الشبكة الداخلية مع AIOStreams:
+              <br>• ضع في حقل <strong><code>URL</code></strong> العنوان الداخلي للحاوية (مثل <code>http://nzbdav:3000</code>).
+              <br>• في حقل <strong><code>Public URL</code></strong> لديك خياران: <strong>الخيار الأفضل (Proxy):</strong> اترك <code>Public URL</code> فارغاً وأدخل <strong>AIOStreams Auth Token</strong> ليقوم AIOStreams بتمرير البث عبر البروكسي المدمج (يتجنب مشاكل WebDAV واختلاف HTTP/HTTPS ويبقي NzbDAV معزولاً بأمان).
+            </p>
+          </section>
+
+          <!-- 3, 4, 5: Indexers, Failover, NZB Grabs -->
+          <section id="un-indexers" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="p-4 rounded-2xl bg-white dark:bg-[#111115] border border-zinc-200 dark:border-zinc-800 space-y-2 text-xs">
+              <h3 class="text-sm font-extrabold text-violet-500">3. إضافة المفهرسات (Add Indexers)</h3>
+              <p class="text-zinc-600 dark:text-zinc-300 leading-relaxed">
+                أضف إضافة <strong>Newznab</strong> لكل مفهرس لديك (مع ضبط <strong>Search Mode</strong> على <code>both</code>)، أو اربط <strong>NZBHydra2</strong> أو <strong>Prowlarr</strong>.
+                <br><strong>تنبيه مهم:</strong> إذا كنت تستخدم TorBox للديبريد فقط (بدون باقة Pro)، حدد خيار <strong>Services</strong> داخل إضافة Newznab ليكون قاصراً على خدمة NNTP الخاصة بك حتى لا تحاول الإضافة فحص الكاش في TorBox وتبطئ البحث!
+              </p>
+            </div>
+
+            <div id="un-failover" class="p-4 rounded-2xl bg-white dark:bg-[#111115] border border-zinc-200 dark:border-zinc-800 space-y-2 text-xs">
+              <h3 class="text-sm font-extrabold text-emerald-500">4. التحويل التلقائي (Failover)</h3>
+              <p class="text-zinc-600 dark:text-zinc-300 leading-relaxed">
+                فعّل <strong>Failover</strong> من <code>Services &rarr; Built-in &rarr; Failover</code>، وفعّل في Deduplicator خياري <strong>Merge Duplicates</strong> و <strong>Harvest Failover Variants</strong>؛ عندها إذا فشل ملف NZB بسبب مقاطع ناقصة، سيجرب AIOStreams نسخة نفس الإصدار من مفهرس آخر أو ينتقل للنتيجة التالية تلقائياً دون توقف المشغل!
+              </p>
+            </div>
+
+            <div id="un-grabs" class="p-4 rounded-2xl bg-white dark:bg-[#111115] border border-zinc-200 dark:border-zinc-800 space-y-2 text-xs">
+              <h3 class="text-sm font-extrabold text-amber-500">5. توحيد IP البحث والسحب (NZB Grabs)</h3>
+              <p class="text-zinc-600 dark:text-zinc-300 leading-relaxed">
+                بعض المفهرسات تمنع اختلاف الـ IP الذي بحث عن الـ NZB عن الـ IP الذي قام بتحميله (كما يحدث مع Stremio NNTP أو TorBox). الحل هو وضع <strong>AIOStreams Proxy Auth</strong> داخل إعدادات إضافة <strong>Newznab</strong> ليقوم AIOStreams بسحب الـ NZB بنفسه وتخزينه في الكاش، وتخصيص User-Agent عبر:
+                <code class="block mt-1 text-violet-400" dir="ltr">[nzb_grabs]:{sabnzbd},indexer.com:{prowlarr}</code>
+              </p>
+            </div>
+          </section>
+        `
+      },
+
+      // 7. FORMATTER, STREAM EXPRESSIONS (SEL) & CONFIG EXPRESSIONS
+      {
+        id: 'formatter',
+        section: 'المرجع التقني (Reference)',
+        title: 'لغة تعبيرات البث (SEL)، المنسق المخصص، والمجموعات (Groups & Variants)',
+        subtitle: 'المرجع الكامل للدوال الشرطية في Stream Expressions، متغيرات ومعدّلات المنسق (Formatter Modifiers)، وتعبيرات الإعداد.',
+        originalUrl: 'https://github.com/Viren070/AIOStreams/blob/main/packages/docs/content/docs/reference/stream-expressions.mdx',
+        toc: [
+          { id: 'ref-sel', label: 'لغة تعبيرات البث (Stream Expressions - SEL)' },
+          { id: 'ref-formatter-sandbox', label: 'مختبر المنسق التفاعلي ومعدّلات القوائم' },
+          { id: 'ref-config-expr', label: 'تعبيرات الإعداد والنسخ الفرعية (Variants)' }
+        ],
+        render: () => `
+          <!-- 1. Stream Expression Language (SEL) -->
+          <section id="ref-sel" class="space-y-3">
+            <h2 class="text-xl font-extrabold border-b border-zinc-200 dark:border-zinc-800 pb-2">1. لغة تعبيرات البث (Stream Expression Language — SEL)</h2>
+            <p class="text-xs sm:text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed">
+              تتيح لك لغة <strong>SEL</strong> كتابة قواعد ديناميكية تعتمد على القائمة الكاملة للنتائج (في أقسام <strong>Required / Excluded / Preferred / Ranked Stream Expressions</strong>). إليك أشهر الدوال والأمثلة العملية من التوثيق الرسمي:
+            </p>
+            ${renderCode(`// 1. حذف نتائج 720p فقط في حال توفر أكثر من 5 نتائج بدقة 1080p:
+count(resolution(streams, '1080p')) > 5 ? resolution(streams, '720p') : false
+
+// 2. عدّ الروابط المخزنة (Cached) التي تأتي بدقة 4K (2160p):
+count(resolution(cached(streams), '2160p'))
+
+// 3. تثبيت أفضل إصدار أنمي مختار من قاعدة SeaDex في أعلى القائمة دائماً:
+pin(seadex(streams, 'best'), 'top')
+
+// 4. تحديد عدد النتائج بـ 3 لكل دقة، أو نتيجتين لكل خدمة ديبريد:
+perGroup(streams, 'resolution', 3)
+perGroup(type(streams, 'debrid'), 'service', 1)
+
+// 5. استبعاد صيغ ملفات معينة (مثل iso و avi) أو كلمات مفتاحية (cam):
+negate(extension(streams, 'iso', 'avi'), streams)
+negate(keyword(streams, 'all', 'cam', 'hdcam'), streams)
+
+// 6. تخطي مراحل الفلترة للنتائج المطابقة بمعرف IMDb/TMDB مباشرة:
+passthrough(idMatched(streams), 'title', 'year', 'episode')`, 'javascript', 'Stream Expression Language (SEL) Examples')}
+          </section>
+
+          <!-- 2. Custom Formatter Modifiers -->
+          <section id="ref-formatter-sandbox" class="space-y-3 pt-4">
+            <h2 class="text-xl font-extrabold border-b border-zinc-200 dark:border-zinc-800 pb-2">2. المنسق المخصص ومعدّلات المصفوفات والمسارات الصوتية (Custom Formatter)</h2>
+            <p class="text-xs sm:text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed">
+              يدعم منسق AIOStreams متغيرات التفضيلات الشخصية <code>{user.*}</code> ومعدّلات المصفوفات (<code>::keep</code>، <code>::remove</code>، <code>::replace</code>، <code>::unique</code>، <code>::join</code>) ومعدّلات مسارات الصوت والترجمة (<code>::where</code>، <code>::pluck</code>، <code>::each</code>):
+            </p>
+            ${renderCode(`# تمييز البث بنجمة إذا كان يحتوي على لغة المستخدم المفضلة:
+{stream.languages::in({user.languages})["⭐"||""]}
+
+# عرض وسوم الصوت الموافقة لتفضيلات المستخدم فقط:
+{stream.audioTags::keep({user.audioTags})::join(', ')}
+
+# دمج HDR10+ مع HDR وإزالة التكرار:
+{stream.visualTags::replace('HDR10+', 'HDR')::unique::join(' | ')}
+
+# عرض تفاصيل كل مسار صوتي (اللغة + الصيغة + القنوات):
+{stream.audioTracks::each("{track.lang::languageCode} {track.tag} {track.channels}")::join(' | ')}
+# النتيجة: EN TrueHD 7.1 | EN DD 2.0 | FR DD+ 5.1
+
+# إظهار رمز CC للترجمات المخصصة لضعاف السمع وأعلام الترجمات الإجبارية (Forced):
+{stream.subtitleTracks::where('hearingImpaired')::exists["CC"||""]}
+{stream.subtitleTracks::where('forced')::pluck('lang')::languageEmoji::join(' ')}`, 'plaintext', 'Custom Formatter Template Syntax')}
+          </section>
+
+          <!-- 3. Config Expressions & Variants -->
+          <section id="ref-config-expr" class="space-y-3 pt-4">
+            <h2 class="text-xl font-extrabold border-b border-zinc-200 dark:border-zinc-800 pb-2">3. النسخ الفرعية (Variants) وتعبيرات الإعداد (Config Expressions)</h2>
+            <p class="text-xs sm:text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed">
+              تسمح لك ميزة <strong>Variants</strong> بإنشاء عدة نسخ مخصصة (مثلاً نسخة للهاتف بدون 4K، ونسخة للتلفزيون في غرفة المعيشة) من نفس الحساب دون إنشاء حساب جديد! يمكن تفعيل النسخة الفرعية تلقائياً عبر شرط مثل <code>includes(userAgent, 'android')</code> أو عبر رابط التثبيت:
+            </p>
+            ${renderCode(`# رابط تثبيت النسخة الفرعية الخاصة بالهاتف (Variant URL):
+https://your-instance/stremio/<uuid>/<password>/v/phone/manifest.json
+
+# أمثلة أوامر Config Expressions لتخصيص النسخة الفرعية:
+set addonName = "Living room"
+set resultLimits.global = 10
+disable presets[type=torrentio]
+merge deduplicator = {
+  "enabled": true,
+  "keys": ["filename", "infoHash"]
+}
+insert after excludedStreamExpressions[expression*="Torbox Download Limit"] = {
+  "expression": "/*No 4K*/ resolution(streams, '2160p')",
+  "enabled": true
+}
+use formatter "Minimal"`, 'ini', 'Variants & Config Expressions')}
+          </section>
+        `
+      },
+
+      // 8. FAQ, TROUBLESHOOTING & HTTP API
+      {
+        id: 'faq-troubleshooting',
+        section: 'المساعدة والـ API (Help & API)',
+        title: 'الأسئلة الشائعة، حل المشاكل، وواجهة البرمجة (FAQ, Troubleshooting & API)',
+        subtitle: 'حلول سريعة لأشهر الأخطاء اثناء الإعداد والتشغيل، بالإضافة إلى نقاط اتصال REST API للمطورين.',
+        originalUrl: 'https://docs.aiostreams.viren070.me/',
+        toc: [
+          { id: 'help-fixes', label: 'حلول أشهر المشاكل والأخطاء' },
+          { id: 'help-api', label: 'واجهة البرمجة (HTTP REST API & Jellyfin API)' }
+        ],
+        render: () => `
+          <section id="help-fixes" class="space-y-4">
+            <h2 class="text-xl font-extrabold border-b border-zinc-200 dark:border-zinc-800 pb-2">🛠️ حلول أشهر المشاكل والأخطاء في AIOStreams</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+              <div class="p-4 rounded-2xl bg-white dark:bg-[#111115] border border-zinc-200 dark:border-zinc-800 space-y-1.5">
+                <div class="font-extrabold text-rose-500">1. خطأ <code>Failed to validate TMDB API Key (401)</code></div>
+                <p class="text-zinc-600 dark:text-zinc-300">تأكد من نسخ الـ <strong>API Key (v3 auth)</strong> المكون من 32 حرفاً من إعدادات حسابك في TMDB، ويمكنك مراجعته داخل قائمة <strong>Services &rarr; Metadata</strong>.</p>
+              </div>
+              <div class="p-4 rounded-2xl bg-white dark:bg-[#111115] border border-zinc-200 dark:border-zinc-800 space-y-1.5">
+                <div class="font-extrabold text-rose-500">2. ظهور الحلقة الخاطئة في بعض مسلسلات الأنمي الطويلة</div>
+                <p class="text-zinc-600 dark:text-zinc-300">استخدم معرف <strong>Kitsu ID</strong> وتأكد من تفعيل خيار <strong>Anime Stream Compatibility</strong> في إعدادات AIOStreams، وأضف <code>{stream.filename}</code> للمنسق لرؤية اسم الملف الأصلي.</p>
+              </div>
+              <div class="p-4 rounded-2xl bg-white dark:bg-[#111115] border border-zinc-200 dark:border-zinc-800 space-y-1.5">
+                <div class="font-extrabold text-rose-500">3. متى أحتاج لإعادة تثبيت الإضافة في Stremio بعد التعديل؟</div>
+                <p class="text-zinc-600 dark:text-zinc-300">معظم التعديلات (الفلاتر، الترتيب، المنسق، إضافة مصادر فيديو) تطبق فوراً بمجرد الضغط على <strong>Save</strong> دون إعادة تثبيت! تحتاج لإعادة التثبيت فقط إذا عدّلت القوائم (Catalogs) أو إذا ظهرت نافذة تطلب منك ذلك.</p>
+              </div>
+              <div class="p-4 rounded-2xl bg-white dark:bg-[#111115] border border-zinc-200 dark:border-zinc-800 space-y-1.5">
+                <div class="font-extrabold text-rose-500">4. خطأ صلاحيات مزامنة SEL أو Regex على النسخ الخاصة</div>
+                <p class="text-zinc-600 dark:text-zinc-300">في النسخ المستضافة ذاتياً، للسماح لجميع المستخدمين باستيراد روابط SEL و Regex الخارجية بدون قيود، اضبط: <code>SEL_SYNC_ACCESS=all</code> و <code>REGEX_FILTER_ACCESS=all</code>.</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="help-api" class="space-y-3 pt-4">
+            <h2 class="text-xl font-extrabold border-b border-zinc-200 dark:border-zinc-800 pb-2">🔌 واجهة البرمجة (HTTP REST API &amp; Endpoints)</h2>
+            <p class="text-xs sm:text-sm text-zinc-600 dark:text-zinc-300">يوفر AIOStreams واجهة برمجة متكاملة للبحث وإدارة المستخدمين وفحص الحالة (باستخدام Basic Auth عبر <code>UUID:password</code> مشفراً بـ Base64):</p>
+            ${renderCode(`# 1. البحث المباشر عن روابط فيلم أو مسلسل عبر الـ Search API:
+curl -u uuid:password "https://your-instance.example.com/api/v1/search?type=movie&id=tt15239678"
+
+# 2. جلب بيانات المستخدم وإعداداته (منذ الإصدار v2.30+ عبر ترويسة Authorization):
+curl "https://your-instance.example.com/api/v1/user" \\
+  -H "Authorization: Basic $(echo -n 'UUID:PASSWORD' | base64)"
+
+# 3. نقطة فحص حالة الخادم (Health / Status Endpoint في v2):
+curl "https://your-instance.example.com/api/v1/status"
+
+# 4. معلومات خادم Jellyfin المدمج وقدراته:
+curl "https://your-instance.example.com/System/Info/Public"`, 'bash', 'AIOStreams REST API Examples')}
+          </section>
+        `
+      }
+    ];
+
+    // ==========================================
+    // STATE & INTERACTIVE CONTROLLERS
+    // ==========================================
+    let currentDocId = 'home';
+    let selectedInstanceKey = 'yeb';
+    let selectedChannel = 'nightly';
+
+    const INSTANCE_MAP = {
+      yeb: {
+        name: "Yeb's (@nhyyeb)",
+        stable: 'https://aiostreamsfortheweak.nhyira.dev/stremio/configure',
+        nightly: 'https://aiostreams-nightly.fortheweak.cloud/stremio/configure'
+      },
+      elfhosted: {
+        name: 'ElfHosted Public',
+        stable: 'https://aiostreams.elfhosted.com/stremio/configure',
+        nightly: 'https://aiostreams.elfhosted.com/stremio/configure'
+      },
+      midnight: {
+        name: "Midnight's (@midnightignite)",
+        stable: 'https://aiostreams.midnightignite.me/stremio/configure',
+        nightly: 'https://aiostreams.midnightignite.me/stremio/configure'
+      },
+      viren: {
+        name: "Viren's (@viren_7)",
+        stable: 'https://aiostreams.viren070.me/stremio/configure',
+        nightly: 'https://aiostreams.viren070.me/stremio/configure'
+      },
+      kuu: {
+        name: "Kuu's (ATBP Hosting)",
+        stable: 'https://aiostreams.atbphosting.com/stremio/configure',
+        nightly: 'https://aiostreams.atbphosting.com/stremio/configure'
+      },
+      omni: {
+        name: "Omni's (@a.ves)",
+        stable: 'https://aiostreams.12312023.xyz/stremio/configure',
+        nightly: 'https://aiostreams.12312023.xyz/stremio/configure'
+      }
+    };
+
+    function showToast(msg) {
+      const wrap = document.getElementById('toastContainer');
+      if (!wrap) return;
+      const el = document.createElement('div');
+      el.className = 'px-4 py-2.5 rounded-xl bg-violet-600 text-white text-xs font-bold shadow-lg border border-violet-400/30 transition-all duration-300';
+      el.textContent = msg;
+      wrap.appendChild(el);
+      setTimeout(() => {
+        el.style.opacity = '0';
+        setTimeout(() => el.remove(), 300);
+      }, 2200);
+    }
+
+    function copyText(text) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+          showToast('✅ تم النسخ إلى الحافظة بنجاح!');
+        }).catch(() => fallbackCopyText(text));
+      } else {
+        fallbackCopyText(text);
+      }
+    }
+
+    function fallbackCopyText(text) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        document.execCommand('copy');
+        showToast('✅ تم النسخ إلى الحافظة بنجاح!');
+      } catch (e) {
+        showToast('⚠️ تعذر النسخ التلقائي');
+      }
+      document.body.removeChild(ta);
+    }
+
+    window.copyCodeBlock = function(id) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      copyText(el.innerText || el.textContent);
+    };
+
+    // Interactive Formatter Preview Modes on Home Page
+    window.setPreviewFormat = function(mode) {
+      const codeEl = document.getElementById('formatterTemplateCode');
+      const nameEl = document.getElementById('formatterPreviewName');
+      const descEl = document.getElementById('formatterPreviewDesc');
+      if (!codeEl || !nameEl || !descEl) return;
+
+      ['prism', 'gdrive', 'torrentio'].forEach(k => {
+        const btn = document.getElementById('fmt-btn-' + k);
+        if (btn) {
+          btn.className = (k === mode)
+            ? 'fmt-mode-btn px-2.5 py-1 rounded bg-violet-600 text-white font-bold'
+            : 'fmt-mode-btn px-2.5 py-1 rounded bg-zinc-800 text-zinc-300';
+        }
+      });
+
+      if (mode === 'prism') {
+        codeEl.textContent = '⚡ [RD+] 4K UHD • BluRay REMUX | DV • HDR10+ | TrueHD Atmos 7.1 | 68.4 GB | FraMeSToR';
+        nameEl.textContent = '⚡ RD+ 4K';
+        descEl.innerHTML = '<div class="font-bold text-white">🎬 BluRay REMUX • HEVC</div><div class="text-amber-300">✨ DV • HDR10+ | 🔊 TrueHD Atmos 7.1</div><div class="text-zinc-400">📦 68.4 GB • 🏷️ FraMeSToR • 🇬🇧 EN</div>';
+      } else if (mode === 'gdrive') {
+        codeEl.textContent = '[RD⚡] AIOStreams 4K DV HDR10+ -> Dune.Part.Two.2024.2160p.REMUX (68.4 GB)';
+        nameEl.textContent = '[RD⚡] 2160p';
+        descEl.innerHTML = '<div class="font-bold text-white">Dune: Part Two (2024) — BluRay REMUX</div><div class="text-emerald-300">DV | HDR10+ | TrueHD 7.1 Atmos | HEVC</div><div class="text-zinc-400">💾 68.4 GB | 👤 FraMeSToR | 🔌 Knaben</div>';
+      } else {
+        codeEl.textContent = '[RD+] Torrentio 4K DV/HDR10+ -> Dune.Part.Two.2024.2160p.UHD.BluRay.REMUX.mkv';
+        nameEl.textContent = '[RD+] 4K';
+        descEl.innerHTML = '<div class="font-bold text-white">Dune.Part.Two.2024.2160p.UHD.BluRay.REMUX</div><div class="text-zinc-300">👤 412 💾 68.4 GB ⚙️ FraMeSToR</div><div class="text-zinc-400">Multi Audio /🇬🇧 / DV / HDR10+ / Atmos</div>';
+      }
+    };
+
+    // Interactive Instance Selector in Setup Guide
+    window.selectPublicInstance = function(key) {
+      selectedInstanceKey = key;
+      document.querySelectorAll('.inst-card').forEach(btn => {
+        const bKey = btn.getAttribute('data-inst');
+        if (bKey === key) {
+          btn.className = 'inst-card p-3 rounded-xl border-2 border-violet-500 bg-violet-500/10 text-right transition-all';
+        } else {
+          btn.className = 'inst-card p-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-right transition-all';
+        }
+      });
+      const customWrap = document.getElementById('customInstanceInputWrap');
+      if (customWrap) {
+        if (key === 'custom') customWrap.classList.remove('hidden');
+        else customWrap.classList.add('hidden');
+      }
+      updateTemplateLauncherLink();
+    };
+
+    window.setInstanceChannel = function(chan) {
+      selectedChannel = chan;
+      const stBtn = document.getElementById('chan-stable');
+      const niBtn = document.getElementById('chan-nightly');
+      if (stBtn && niBtn) {
+        if (chan === 'stable') {
+          stBtn.className = 'px-2.5 py-1 rounded-lg font-mono font-bold bg-violet-600 text-white';
+          niBtn.className = 'px-2.5 py-1 rounded-lg font-mono font-bold text-zinc-500';
+        } else {
+          niBtn.className = 'px-2.5 py-1 rounded-lg font-mono font-bold bg-violet-600 text-white';
+          stBtn.className = 'px-2.5 py-1 rounded-lg font-mono font-bold text-zinc-500';
+        }
+      }
+      updateTemplateLauncherLink();
+    };
+
+    window.updateTemplateLauncherLink = function() {
+      const labelEl = document.getElementById('selectedInstanceLabel');
+      const urlTextEl = document.getElementById('selectedInstanceUrlText');
+      const btnEl = document.getElementById('openTemplateActionBtn');
+      if (!labelEl || !urlTextEl || !btnEl) return;
+
+      let targetUrl = '';
+      let displayTitle = '';
+
+      if (selectedInstanceKey === 'custom') {
+        const inp = document.getElementById('customInstanceUrlInput');
+        const base = (inp ? inp.value.trim() : 'https://aiostreams.yourdomain.com').replace(/\/+$/, '');
+        targetUrl = base + '/stremio/configure';
+        displayTitle = 'فتح القالب على نسختك الخاصة (Self-Hosted)';
+      } else {
+        const info = INSTANCE_MAP[selectedInstanceKey] || INSTANCE_MAP.yeb;
+        targetUrl = info[selectedChannel] || info.nightly;
+        displayTitle = `فتح القالب على نسخة ${info.name} (${selectedChannel})`;
+      }
+
+      labelEl.textContent = displayTitle;
+      urlTextEl.textContent = targetUrl;
+      btnEl.href = targetUrl;
+    };
+
+    // ==========================================
+    // SIDEBAR, TOC & NAVIGATION RENDERING
+    // ==========================================
+    function renderDocsLayout() {
+      const pageIdx = DOC_PAGES.findIndex(p => p.id === currentDocId);
+      const page = DOC_PAGES[pageIdx] || DOC_PAGES[0];
+
+      // 1. Sidebar Tree
+      const sbContainer = document.getElementById('sidebarTreeContainer');
+      if (sbContainer) {
+        const sections = [];
+        DOC_PAGES.forEach(p => {
+          if (!sections.includes(p.section)) sections.push(p.section);
+        });
+
+        sbContainer.innerHTML = sections.map(sec => {
+          const items = DOC_PAGES.filter(p => p.section === sec);
+          return `
+            <div>
+              <div class="text-[11px] font-extrabold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider px-2.5 mb-1.5">${sec}</div>
+              <div class="space-y-1">
+                ${items.map(item => {
+                  const isActive = item.id === currentDocId;
+                  return `
+                    <button type="button" onclick="navigateDoc('${item.id}')" class="w-full text-right px-3 py-2 rounded-lg text-xs font-bold transition-all flex items-center justify-between ${
+                      isActive
+                        ? 'bg-violet-600/15 text-violet-600 dark:text-violet-300 border-r-2 border-violet-500'
+                        : 'text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-900 hover:text-zinc-900 dark:hover:text-zinc-200'
+                    }">
+                      <span class="truncate">${item.title}</span>
+                    </button>
+                  `;
+                }).join('')}
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      // 2. Top Nav Active State
+      document.querySelectorAll('.top-nav-link').forEach(btn => {
+        const target = btn.getAttribute('data-top-nav');
+        if (target === currentDocId) {
+          btn.className = 'top-nav-link px-3 py-1.5 rounded-lg text-violet-600 dark:text-violet-400 bg-violet-500/10 font-extrabold transition-colors';
+        } else {
+          btn.className = 'top-nav-link px-3 py-1.5 rounded-lg hover:text-zinc-900 dark:hover:text-white transition-colors';
+        }
+      });
+
+      // 3. Breadcrumbs & Original Link
+      const bc = document.getElementById('docBreadcrumbs');
+      if (bc) {
+        bc.innerHTML = `
+          <button type="button" onclick="navigateDoc('home')" class="hover:text-violet-500">AIOStreams</button>
+          <span>/</span>
+          <span>${page.section}</span>
+          <span>/</span>
+          <span class="text-violet-600 dark:text-violet-400 font-bold">${page.title}</span>
+        `;
+      }
+      const origLink = document.getElementById('openOriginalPageLink');
+      if (origLink) origLink.href = page.originalUrl;
+
+      // 4. Article Body
+      const article = document.getElementById('docArticleBody');
+      if (article) {
+        article.innerHTML = `
+          <div class="space-y-2 pb-4 border-b border-zinc-200 dark:border-zinc-800/80">
+            <div class="text-xs font-extrabold text-violet-500">${page.section}</div>
+            <h1 class="text-2xl sm:text-3xl font-black tracking-tight text-zinc-900 dark:text-white">${page.title}</h1>
+            <p class="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">${page.subtitle}</p>
+          </div>
+          ${page.render()}
+        `;
+      }
+
+      // 5. Right-hand "On this page" TOC
+      const tocEl = document.getElementById('onThisPageToc');
+      if (tocEl) {
+        tocEl.innerHTML = (page.toc || []).map(item => `
+          <button type="button" onclick="scrollToSection('${item.id}')" class="block w-full text-right text-zinc-500 dark:text-zinc-400 hover:text-violet-500 dark:hover:text-violet-400 transition-colors py-0.5 leading-snug">
+            ${item.label}
+          </button>
+        `).join('');
+      }
+
+      // 6. Prev / Next Cards
+      const prev = pageIdx > 0 ? DOC_PAGES[pageIdx - 1] : null;
+      const next = pageIdx < DOC_PAGES.length - 1 ? DOC_PAGES[pageIdx + 1] : null;
+      const pagEl = document.getElementById('docPaginationCards');
+      if (pagEl) {
+        pagEl.innerHTML = `
+          <div>
+            ${prev ? `
+              <button type="button" onclick="navigateDoc('${prev.id}')" class="w-full text-right p-4 rounded-xl bg-white dark:bg-[#111115] border border-zinc-200 dark:border-zinc-800 hover:border-violet-500 transition-all group">
+                <div class="text-[11px] text-zinc-400 mb-1">→ السابق</div>
+                <div class="text-xs sm:text-sm font-extrabold text-zinc-900 dark:text-white group-hover:text-violet-500">${prev.title}</div>
+              </button>
+            ` : ''}
+          </div>
+          <div>
+            ${next ? `
+              <button type="button" onclick="navigateDoc('${next.id}')" class="w-full text-left p-4 rounded-xl bg-white dark:bg-[#111115] border border-zinc-200 dark:border-zinc-800 hover:border-violet-500 transition-all group">
+                <div class="text-[11px] text-zinc-400 mb-1">التالي ←</div>
+                <div class="text-xs sm:text-sm font-extrabold text-zinc-900 dark:text-white group-hover:text-violet-500">${next.title}</div>
+              </button>
+            ` : ''}
+          </div>
+        `;
+      }
+    }
+
+    window.navigateDoc = function(docId) {
+      currentDocId = docId;
+      closeMobileDrawer();
+      renderDocsLayout();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    window.scrollToSection = function(secId) {
+      const el = document.getElementById(secId);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    };
+
+    function openMobileDrawer() {
+      const sb = document.getElementById('docsSidebar');
+      const ov = document.getElementById('mobileOverlay');
+      if (sb) sb.classList.remove('translate-x-full');
+      if (ov) ov.classList.remove('hidden');
+    }
+
+    function closeMobileDrawer() {
+      const sb = document.getElementById('docsSidebar');
+      const ov = document.getElementById('mobileOverlay');
+      if (sb) sb.classList.add('translate-x-full');
+      if (ov) ov.classList.add('hidden');
+    }
+
+    // ==========================================
+    // INITIALIZATION & EVENT LISTENERS
+    // ==========================================
+    window.addEventListener('DOMContentLoaded', () => {
+      try {
+        const savedTheme = localStorage.getItem('aiostreams_docs_ar_theme');
+        if (savedTheme === 'light') document.documentElement.classList.remove('dark');
+        else document.documentElement.classList.add('dark');
+      } catch (e) {}
+
+      renderDocsLayout();
+
+      // Top navigation links
+      document.querySelectorAll('.top-nav-link').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const target = btn.getAttribute('data-top-nav');
+          if (target) navigateDoc(target);
+        });
+      });
+
+      // Brand button
+      const brandBtn = document.getElementById('brandLogoBtn');
+      if (brandBtn) brandBtn.addEventListener('click', () => navigateDoc('home'));
+
+      // Copy Page Markdown button
+      const copyMdBtn = document.getElementById('copyPageMdBtn');
+      if (copyMdBtn) {
+        copyMdBtn.addEventListener('click', () => {
+          const article = document.getElementById('docArticleBody');
+          if (article) copyText(article.innerText || article.textContent);
+        });
+      }
+
+      // Mobile drawer
+      const mobBtn = document.getElementById('mobileMenuBtn');
+      const mobOv = document.getElementById('mobileOverlay');
+      if (mobBtn) mobBtn.addEventListener('click', openMobileDrawer);
+      if (mobOv) mobOv.addEventListener('click', closeMobileDrawer);
+
+      // Theme toggle
+      const themeBtn = document.getElementById('themeToggleBtn');
+      if (themeBtn) {
+        themeBtn.addEventListener('click', () => {
+          const isDark = document.documentElement.classList.toggle('dark');
+          try {
+            localStorage.setItem('aiostreams_docs_ar_theme', isDark ? 'dark' : 'light');
+          } catch (e) {}
+        });
+      }
+
+      // Search Input
+      const searchInput = document.getElementById('docSearchInput');
+      const searchDropdown = document.getElementById('searchDropdown');
+      const searchList = document.getElementById('searchMatchList');
+      const searchCount = document.getElementById('searchCountLabel');
+      const closeSearchBtn = document.getElementById('closeSearchDropdownBtn');
+
+      if (searchInput && searchDropdown && searchList) {
+        searchInput.addEventListener('input', () => {
+          const q = searchInput.value.trim().toLowerCase();
+          if (!q) {
+            searchDropdown.classList.add('hidden');
+            return;
+          }
+          const matches = DOC_PAGES.filter(p => {
+            const hay = (p.title + ' ' + p.subtitle + ' ' + p.section + ' ' + p.render()).toLowerCase();
+            return hay.includes(q);
+          });
+          searchDropdown.classList.remove('hidden');
+          if (searchCount) searchCount.textContent = `نتائج البحث (${matches.length})`;
+          if (!matches.length) {
+            searchList.innerHTML = `<div class="text-xs text-zinc-400 p-2">لا توجد نتائج مطابقة لـ "${searchInput.value}"</div>`;
+            return;
+          }
+          searchList.innerHTML = matches.map(m => `
+            <button type="button" onclick="navigateDoc('${m.id}'); document.getElementById('searchDropdown').classList.add('hidden');" class="w-full text-right p-2.5 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800/80 transition-colors block">
+              <div class="text-xs font-extrabold text-violet-500">${m.title}</div>
+              <div class="text-[11px] text-zinc-500 dark:text-zinc-400 truncate">${m.subtitle}</div>
+            </button>
+          `).join('');
+        });
+      }
+      if (closeSearchBtn && searchDropdown && searchInput) {
+        closeSearchBtn.addEventListener('click', () => {
+          searchDropdown.classList.add('hidden');
+          searchInput.value = '';
+        });
+      }
+    });
+  </script>
+</body>
+</html>
